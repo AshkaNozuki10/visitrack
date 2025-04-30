@@ -18,6 +18,10 @@ class TblInformation extends Model
         return $this->belongsTo(TblAddress::class, 'address');
     }
 
+    public function credential(){
+        return $this->hasOne(TblCredential::class, 'user_id', 'user_id');
+    }
+
     public $timestamps = false; //Disables timestamps
 
     //Database Configuration

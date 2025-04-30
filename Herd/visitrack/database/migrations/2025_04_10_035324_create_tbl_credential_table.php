@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('password', 255);
         });
 
+        /*
         //Foreign Key Constraints
         Schema::table('tbl_credential',  function(Blueprint $table){
             $table->foreign('user_id')
@@ -25,6 +26,8 @@ return new class extends Migration
                   ->on('tbl_information')
                   ->onDelete('cascade');
         });
+        */
+        
     }
 
     /**

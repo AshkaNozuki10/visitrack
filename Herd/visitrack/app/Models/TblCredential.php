@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class TblCredential extends Model
 {
-    public function information(){
-        return $this->belongsTo(TblInformation::class);
+    public function user(){
+        return $this->belongsTo(TblInformation::class, 'user_id'. 'user_id');
     }
 
     //Define table name
@@ -20,4 +20,6 @@ class TblCredential extends Model
         'username' => 'string',
         'password' => 'string'
     ];
+    
+    public $timestamps = false; //No timestamp needed
 }

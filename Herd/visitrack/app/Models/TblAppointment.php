@@ -23,6 +23,7 @@ class TblAppointment extends Model
     public function qr_code(): BelongsTo{
         return $this->belongsTo(TblQrCode::class, 'qr_code');
     }
+    
     //Define table name
     protected $table = 'tbl_appointment';
 

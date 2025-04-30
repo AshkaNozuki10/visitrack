@@ -10,12 +10,14 @@ use Tests\TestCase;
 
 class TestRelationships extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
+    //Test the user address
     public function test_user_address()
     {
         $address = TblAddress::factory()->create();
         $info =  TblInformation::factory()->create(['address' => $address->address_id]);
+
+        $this->assertInstanceOf(TblAddress::class, $info->address);
+        //$this->assertEquals($address->id, $info->address->id);
     }
+    
 }

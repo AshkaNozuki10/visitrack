@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tbl_appointment', function (Blueprint $table) {
-            
+
             $table->foreign('user_id') //Column that need to  contraint
             ->references('user_id') //Column from the other table that need to constraint
             ->on('tbl_information') //Table that has relationship to this table
@@ -32,7 +32,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('tbl_appointment', function (Blueprint $table) {
-            //
+            $table->dropForeign(['user_id']);
+            $table->dropForeign(['qr_code']);
         });
     }
 };

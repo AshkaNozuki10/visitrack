@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class TblAddress extends Model
 {
     //Define relationship and foreign key constraint
-    public function user_constraint(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(TblInformation::class, 'user_id');
         // return $this->belongsTo(TblInformation::class, 'user_id');
