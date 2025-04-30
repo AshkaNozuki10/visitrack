@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('first_name', 55);
             $table->string('middle_name', 55)->nullable();
             $table->enum('sex', ['male', 'female']);
-            $table->date('birth_date');
+            $table->date('birthdate');
             $table->unsignedBigInteger('address');
             $table->unsignedBigInteger('credential');
             $table->enum('role', ['Student', 'Admin', 'Faculty', 'Contractor', 'Vendor']);
