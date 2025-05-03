@@ -1,32 +1,20 @@
 <?php
-// Database connection
+// Add at the top of the file
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
 
-require_once __DIR__ . "/backend/Database.php";
-require_once __DIR__ . "/backend/DatabaseFactory.php";
+// Remove duplicate database connection code (keep only the factory version)
+// Add pagination
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$limit = 50;
+$offset = ($page - 1) * $limit;
 
-try {
-    // **Load the configuration array from config.php**
-    $config = require 'config.php';
-
-    // **Create a Database object using the Factory and the configuration**
-    $db = DatabaseFactory::create($config);
-
-    // **Get the PDO connection**
-    $pdo = $db->getConnection();
-
-    // **Now you can use $pdo to make SQL requests (as we showed before)**
-    // Example: Fetch users (same example as before)
-    $stmt = $pdo->prepare("SELECT * FROM student_tracking_log ORDER BY created_at DESC");
-    $stmt->execute();
-    $records = $stmt->fetchAll();
-    
-    // $db = new Database($dsn, $username, $password);
-    // $pdo = $db->getConnection();
-    // $stmt = $pdo->prepare("SELECT * FROM student_tracking_log ORDER BY created_at DESC");
-    // $stmt->execute();
-    // $records = $stmt->fetchAll();
-    // $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    // $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$stmt = $pdo->prepare("SELECT * FROM location ORDER BY created_at DESC LIMIT :limit OFFSET :offset");
+$stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+$stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
     
     // // Fetch data from student_tracking_log table
     // $query = "SELECT * FROM student_tracking_log ORDER BY created_at DESC";
