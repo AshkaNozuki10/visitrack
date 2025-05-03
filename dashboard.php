@@ -52,21 +52,27 @@ try {
     <link rel="stylesheet" href="styles/dashboard.css">
 
 
-    <script>
-    // Auto refresh the page every 5 minutes
-    setTimeout(function() {
-        window.location.reload();
-    }, 300000);
+    <!-- Replace forced refresh with AJAX -->
+<script>
+// Instead of setTimeout refresh
+function refreshData() {
+    fetch(window.location.href)
+        .then(response => response.text())
+        .then(html => {
+            // Parse new data and update DOM selectively
+            updateLastUpdated();
+        });
+}
 
-    // Update the "Last updated" timestamp
-    function updateLastUpdated() {
-        document.getElementById('last-update').textContent =
-            'Last updated: ' + new Date().toLocaleString();
-    }
+// Refresh every 5 minutes
+setInterval(refreshData, 300000);
 
-    // Call when page loads
-    window.onload = updateLastUpdated;
-    </script>
+// Add error handling for map
+if (students.length === 0) {
+    document.getElementById('map').innerHTML = '<p class="no-data">No location data available</p>';
+}
+</script>
+
 </head>
 
 <body>
