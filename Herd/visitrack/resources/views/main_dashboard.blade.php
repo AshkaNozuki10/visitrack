@@ -83,7 +83,7 @@ try {
 <body>
     <div class="container">
         <div class="dashboard-header">
-            <h1 class="dashboard-title">Student Tracking Log Dashboard</h1>
+            <h1 class="dashboard-title">Welcome {{ Auth::user()->name }} to main dashboard</h1>
             <a href="<?php echo $_SERVER['PHP_SELF']; ?>" class="refresh-btn">Refresh Data</a>
         </div>
 

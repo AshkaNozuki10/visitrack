@@ -19,7 +19,7 @@ return new class extends Migration
                     ->unsigner()
                     ->index();
             $table->string('last_name');
-            $table->string('first_name');
+            $table->string('first_name');   
             $table->string('middle_name')
                     ->nullable();
             $table->enum('sex', ['male', 'female']);

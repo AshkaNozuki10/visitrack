@@ -1,4 +1,12 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitrack - Home</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/partials.css') }}">
 <!-- Nav Bar -->
  @include('partials.nav');
 
@@ -7,13 +15,13 @@
 
     <section class="section1">
         <div class="desc1">
-            <img src="/styles/img/building.png" alt="Lab building" class="building">
+            <img src="{{ asset('css/img/building.png') }}" alt="Lab building" class="building">
             <h1>A REAL TIME LOCATION TRACKER FOR QCU VISITORS</h1>
             <p>At Quezon City University, We Believe In Creating A Safe And <br> Connected Environment For Our Students,
                 Faculty, And Staff. That's <br> Why We've Developed A Cutting-Edge Location Tracking System To <br>
                 Enhance Campus Security And Give You Peace Of Mind.</p>
             <div>
-                <a href="#" class="register_btn">Register</a>
+                <a href="{{ route('auth.registration') }}" class="register_btn">Register</a>
                 <a href="#terms" class="contact_btn">Contact Us</a>
             </div>
 
@@ -25,7 +33,7 @@
 
     <section class="section2">
         <div class="desc2">
-            <img src="/styles/img/city.png" alt="City drawing" class="city">
+            <img src=" {{ asset('css/img/city.png') }}" alt="City drawing" class="city">
             <h1 id="stay-aware">SECURE CAMPUS, EMPOWERED COMMUNITY</h1>
             <br>
             <h2>Stay Aware, Stay Secure</h2>
@@ -37,7 +45,7 @@
         </div>
 
         <div class="desc3">
-            <img src="styles/img/map.png" alt="Map drawing" class="map">
+            <img src="{{ asset('css/img/map.png') }}" alt="Map drawing" class="map">
             <h1>SAFETY WITH PRIVACY-ORIENTED TRACKING </h1>
             <br>
             <p>By Leveraging the Power of Openstreetmap-Based Location Tracking, We're <br> Putting the Tools for a
@@ -52,7 +60,7 @@
 
     <section class="section3">
         <div class="desc4">
-            <img src="/styles/img/college_students.png" alt="students drawing" class="students">
+            <img src="{{ asset('css/img/college_students.png') }}" alt="students drawing" class="students">
             <h1>UNLOCK THE FULL POTENTIAL <br>OF CAMPUS LIFE</h1>
             <br>
             <p>Experience the Freedom to Explore Your University to the Fullest,<br> Knowing That Your Location Is Being
@@ -62,7 +70,7 @@
         </div>
 
         <div class="desc5">
-            <img src="styles/img/security.png" alt="security image" class="security">
+            <img src="{{ asset('css/img/security.png') }}" alt="security image" class="security">
             <h1>JOIN THE MOVEMENT FOR A SAFER, <br>
                 PRIVACY-FOCUSED CAMPUS</h1>
             <br>

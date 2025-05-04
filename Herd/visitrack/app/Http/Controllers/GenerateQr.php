@@ -43,7 +43,7 @@ class GenerateQr extends Controller
     {
         // You can customize this to include whatever information you need
         return json_encode([
-            'appointment_id' => $appointment->id,
+            'appointment_id' => $appointment->appointment_id,
             'user_id' => $appointment->user_id,
             'verification_code' => bin2hex(random_bytes(8)),
             'timestamp' => now()->toDateTimeString(),

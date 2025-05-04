@@ -5,7 +5,7 @@ use App\Models\User;
 use App\Notifications\GpsStatusNotification;
 use Illuminate\Http\Request;
 
-class LocationService extends Controller{
+class LocationController extends Controller{
 
     //Toggle the user's
     public function toggleLocationTracking(User $user, bool $status){
@@ -36,7 +36,7 @@ class LocationService extends Controller{
     }
 
     public function checkCampusZone(User $user, float $lat, float $lng): bool
-    {
+    {   
         // Define your campus boundaries (example coordinates)
         $campusBounds = [
             'min_lat' => 12.3456,
