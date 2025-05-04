@@ -14,6 +14,9 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
+    {{-- local bootstrap config --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js']) {{-- <-- This links to the compiled assets --}}
+
     @yield('styles')
 </head>
 <body>
