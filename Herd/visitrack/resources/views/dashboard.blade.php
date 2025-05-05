@@ -2,31 +2,7 @@
 
 @section('styles')
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<style>
-    #map {
-        height: 500px;
-        width: 100%;
-        border-radius: 8px;
-    }
-    .sidebar {
-        background: linear-gradient(to bottom, #B45309, #D97706);
-        min-height: 100vh;
-    }
-    .sidebar-link {
-        color: white;
-        padding: 10px 15px;
-        display: block;
-        border-radius: 5px;
-    }
-    .sidebar-link:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-        color: white;
-        text-decoration: none;
-    }
-    .sub-menu {
-        padding-left: 20px;
-    }
-</style>
+<link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 @endsection
 
 @section('content')
