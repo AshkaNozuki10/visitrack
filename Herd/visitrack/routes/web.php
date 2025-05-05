@@ -3,6 +3,8 @@
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\QRScanController;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GenerateQr;
@@ -16,7 +18,7 @@ Route::get('/', function () {
 //Login Page
 Route::get('/login', function () {
     return view('auth.login');
-});
+})->name('show.login');
 
 //Registration Page
 Route::get('/register', function () {
@@ -32,7 +34,7 @@ Route::post('/login', [LoginController::class, 'authenticateUser'])->name('auth.
 Route::post('/register', [RegisteredUserController::class, 'register'])->name('auth.registration');
 
 //Logout
-Route::post('/logout', [LoginController::class, 'logOut'])->name('logout');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 //Testing the post method
 Route::get('test-register', [RegisteredUserController::class, 'testRegister'])->name('test.register');
@@ -44,10 +46,8 @@ Route::get('/db-test', function () {
 
 //Main Dashboard
 Route::get('/dashboard', function (){
-    return view('main_dashboard');
-});
-
-Route::get('/location-test', [LocationController::class, 'test']);
+    return view('dashboard');
+})->name('dashboard');
 
 //Test the csrf token
 Route::get('/test-csrf', function() {
@@ -57,12 +57,13 @@ Route::get('/test-csrf', function() {
 //Test the qr code
 Route::get('/test-generate-qr', [GenerateQr::class, 'generateQrContent']);
 
+// Appointment and QR routes
+Route::post('/appointments/{appointment}/approve', [AppointmentController::class, 'approve'])->name('appointments.approve');
+Route::post('/qr/scan', [QRScanController::class, 'scan'])->name('qr.scan');
+Route::post('/tracking/stop', [QRScanController::class, 'stopTracking'])->name('tracking.stop');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 });
-
-Route::get('/maintenance', function () {
-    return view('maintenance');
-})->name('maintenance');
