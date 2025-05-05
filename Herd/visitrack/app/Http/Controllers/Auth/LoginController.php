@@ -8,17 +8,23 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Middleware\ThrottleRequests;
 
 class LoginController extends Controller    
 {
+    use AuthorizesRequests, ValidatesRequests, ThrottleRequests;
+
     /**
      * Create a new controller instance.
      */
-
     /*
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('student')->except('logout');
     }
     */
 
@@ -33,7 +39,7 @@ class LoginController extends Controller
     /**
      * Authenticate the user.
      */
-    public function authenticate(Request $request): RedirectResponse
+    public function authenticateUser(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
             'username' => ['required', 'string', 'email'],
@@ -42,12 +48,22 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt([
-            'email' => $credentials['username'], // Map username to email field
+            'email' => $credentials['username'],
             'password' => $credentials['password']
         ], $request->boolean('remember'))) {
             $request->session()->regenerate();  
 
-            return redirect()->intended('dashboard');
+            $user = Auth::user();
+
+            if($user->role === 'admin'){
+                return redirect()->route('admin.dashboard');
+            } 
+            
+            elseif($user->role === 'student'){
+                return redirect()->route('student.dashboard');
+            }
+
+            return redirect()->route('dashboard');
         }
 
         throw ValidationException::withMessages([

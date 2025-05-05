@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\TblAppointment;
-use App\Models\TblQrCode;
+use App\Models\Appointment;
+use App\Models\QrCode;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode as QrCodeGenerator;
 
 class GenerateQr extends Controller
 {
-    public function generateForAppointment(TblAppointment $appointment){
+    public function generateForAppointment(Appointment $appointment){
         // Validate that the appointment is approved
         if (!$appointment->is_approved(['rejected'])) {
             throw new \Exception('Cannot generate QR code for unapproved appointment');
@@ -29,7 +29,7 @@ class GenerateQr extends Controller
         Storage::put($storagePath, $qrImage);
 
         // Create QR code record in database
-        $qrCode = TblQrCode::create([
+        $qrCode = QrCode::create([
             'user_id' => $appointment->user_id,
             'qr_text' => $qrContent,
             'qr_picture' => $storagePath,
@@ -39,7 +39,7 @@ class GenerateQr extends Controller
         return $qrCode;
     }
 
-    protected function generateQrContent(TblAppointment $appointment)
+    protected function generateQrContent(Appointment $appointment)
     {
         // You can customize this to include whatever information you need
         return json_encode([
@@ -59,7 +59,7 @@ class GenerateQr extends Controller
      */
     public function show(Request $request, $id)
     {
-        $qrCode = TblQrCode::where('user_id', $request->user()->id)
+        $qrCode = QrCode::where('user_id', $request->user()->id)
                         ->findOrFail($id);
 
         return response()->file(Storage::path($qrCode->qr_picture));
