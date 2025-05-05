@@ -9,15 +9,15 @@ class Address extends Model
     protected $table = 'address';
     protected $primaryKey = 'address_id';
     public $incrementing = true;
-    public $keyType = 'int';
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function information()
     {
-        return $this->belongsTo(information::class, 'user_id');
+        return $this->belongsTo(Information::class, 'user_id', 'user_id');
     }
 
     protected $fillable = [
+        'user_id',
         'street_no',
         'street_name',
         'barangay',

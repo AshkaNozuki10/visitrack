@@ -7,17 +7,21 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Credential extends Authenticatable
 {
     protected $table = 'credential';
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'credential_id';
     public $incrementing = true;
-    public $keyType = 'int';
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function information(){
-        return $this->belongsTo(information::class, 'user_id', 'user_id');
+        return $this->belongsTo(Information::class, 'user_id', 'user_id');
     }
 
     protected $fillable = [
+        'user_id',
         'username',
+        'password',
+    ];
+
+    protected $hidden = [
         'password',
     ];
 

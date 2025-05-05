@@ -8,11 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Information extends Model
 {
-    protected $table = 'information';
+    protected $table = 'user_information';
     protected $primaryKey = 'user_id';
     public $incrementing = true;
-    public $keyType = 'int';
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function credential(){
         return $this->hasOne(credential::class, 'user_id', 'user_id');
@@ -23,6 +22,7 @@ class Information extends Model
     }
 
     protected $fillable = [
+        'user_id',
         'last_name',
         'first_name',
         'middle_name',
@@ -30,13 +30,4 @@ class Information extends Model
         'birthdate',
         'role',
     ];
-
-
-    /*
-    kindly remove this temporarily
-    protected $casts = [
-        'sex' => SexEnum::class,
-        'role' => RoleEnum::class,
-    ];
-    */
 }
