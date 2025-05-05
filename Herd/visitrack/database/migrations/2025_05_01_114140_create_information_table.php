@@ -11,55 +11,49 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // create user_information with foreign key 
         Schema::create('user_information', function (Blueprint $table) {
-
-            // this line throw QueryException "SQLSTATE[HY000]: General error: 1215 Cannot add foreign key constraint..."
-            // $table->integer('user_id')->unsigned()->index();
-            $table->id('user_id')
-                    ->unsigner()
-                    ->index();
+            $table->id('user_id');
             $table->string('last_name');
             $table->string('first_name');   
-            $table->string('middle_name')
-                    ->nullable();
+            $table->string('middle_name')->nullable();
             $table->enum('sex', ['male', 'female']);
             $table->date('birthdate');
             $table->enum('role', ['student', 'non_student', 'admin', 'faculty', 'contractor']);
-
             $table->timestamps();
         });
 
-        Schema::create('address', function (Blueprint $table) {
-            // this line throw QueryException "SQLSTATE[HY000]: General error: 1215 Cannot add foreign key constraint..."
-            // $table->integer('user_id')->unsigned()->index();
+         // Finally create address with foreign key to user_information
+         Schema::create('address', function (Blueprint $table) {
             $table->id('address_id');
-            $table->unsignedBigInteger('user_id')->index();
-            $table->foreign('user_id')
-                    ->references('user_id')
-                    ->on('user_information')
-                    ->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
             $table->string('street_no');
             $table->string('street_name');  
             $table->string('barangay');
-            $table->string('district')
-                    ->nullable();
+            $table->string('district')->nullable();
             $table->string('city');
+            $table->timestamps();
 
+            $table->foreign('user_id')
+                  ->references('user_id')
+                  ->on('user_information')
+                  ->onDelete('cascade');
+        });
+        
+        // create the credential table as it's independent
+        Schema::create('credential', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('username')->unique();
+            $table->string('password');
             $table->timestamps();
         });
 
-        Schema::create('credential', function (Blueprint $table) {
-            $table->id('credential_id');
-            $table->unsignedBigInteger('user_id')
-                    ->index();
+        // Update credential table to add foreign key now that user_information exists
+        Schema::table('credential', function (Blueprint $table) {
             $table->foreign('user_id')
-                    ->references('user_id')
-                    ->on('user_information')
-                    ->onDelete('cascade');
-            $table->string('username');
-            $table->string('password');
-
-            $table->timestamps();
+                  ->references('user_id')
+                  ->on('user_information')
+                  ->onDelete('cascade');
         });
     }
 
@@ -68,8 +62,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_information');
         Schema::dropIfExists('address');
+        Schema::dropIfExists('user_information');
         Schema::dropIfExists('credential');
     }
 };
