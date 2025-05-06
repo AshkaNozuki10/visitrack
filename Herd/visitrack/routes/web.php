@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GenerateQr;
 use App\Models\appointment;
 
+// Public routes
 //Homepage
 Route::get('/', function () {
     return view('home');
@@ -18,19 +19,13 @@ Route::get('/', function () {
 //Login Page
 Route::get('/login', function () {
     return view('auth.login');
-})->name('show.login');
+})->name('login'); // Changed from 'show.login' to 'login'
 
 //Registration Page
-Route::get('/register', function () {
-    return view('auth.registration');
-});
-
-//Get method for login and registration
 Route::get('/register', [RegisteredUserController::class, 'showRegistrationForm'])->name('show.register');
-Route::get('/login', [LoginController::class, 'showLogin'])->name('show.login');
 
 //Post method for login and registration
-Route::post('/login', [LoginController::class, 'authenticateUser'])->name('auth.login');
+Route::post('/login', [LoginController::class, 'authenticateUser'])->middleware('throttle:3,5')->name('auth.login');
 Route::post('/register', [RegisteredUserController::class, 'register'])->name('auth.registration');
 
 //Logout
@@ -44,10 +39,22 @@ Route::get('/db-test', function () {
     return view('database_test');
 }); 
 
-//Main Dashboard
-Route::get('/dashboard', function (){
-    return view('dashboard');
-})->name('dashboard');
+// Role-protected routes
+// Admin routes
+Route::middleware(['auth', 'admin'])->group(function () {
+Route::get('/admin-dashboard', function () {
+    return view('admin_dashboard');
+})->name('admin.dashboard');
+
+});
+// Visitor routes
+Route::middleware(['auth', 'visitor'])->group(function () {
+    Route::get('/visitor-dashboard', function () {
+        return view('visitor_dashboard');
+    })->name('visitor.dashboard');
+
+    // Add other visitor routes here
+});
 
 //Test the csrf token
 Route::get('/test-csrf', function() {
@@ -57,13 +64,12 @@ Route::get('/test-csrf', function() {
 //Test the qr code
 Route::get('/test-generate-qr', [GenerateQr::class, 'generateQrContent']);
 
+// Temporary testing route - REMOVE BEFORE PRODUCTION
+Route::get('/test-visitor-dashboard', function () {
+    return view('visitor_dashboard');
+})->name('test.visitor.dashboard');
+
 // Appointment and QR routes
 Route::post('/appointments/{appointment}/approve', [AppointmentController::class, 'approve'])->name('appointments.approve');
 Route::post('/qr/scan', [QRScanController::class, 'scan'])->name('qr.scan');
 Route::post('/tracking/stop', [QRScanController::class, 'stopTracking'])->name('tracking.stop');
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
