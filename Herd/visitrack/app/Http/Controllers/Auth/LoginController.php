@@ -12,11 +12,10 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Middleware\ThrottleRequests;
 
-class LoginController extends Controller    
+class LoginController extends BaseController    
 {
-    use AuthorizesRequests, ValidatesRequests, ThrottleRequests;
+    use AuthorizesRequests, ValidatesRequests;
 
     /**
      * Create a new controller instance.
@@ -31,6 +30,12 @@ class LoginController extends Controller
     /**
      * Show the login form.
      */
+
+    public function __construct()
+    {
+        $this->middleware('throttle:3,5')->only(['authenticateUser', 'showLogin']);
+    }
+
     public function showLogin(): View
     {
         return view('auth.login'); // Changed to standard auth.login location
@@ -48,22 +53,23 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt([
-            'email' => $credentials['username'],
+            'username' => $credentials['username'],
             'password' => $credentials['password']
         ], $request->boolean('remember'))) {
             $request->session()->regenerate();  
 
             $user = Auth::user();
-
-            if($user->role === 'admin'){
-                return redirect()->route('admin.dashboard');
-            } 
             
-            elseif($user->role === 'student'){
-                return redirect()->route('student.dashboard');
+            // Redirect based on user role
+            // Access role through the information relationship
+            switch ($user->information->role) {
+                case \App\Enums\RoleEnum::ADMIN->value:
+                    return redirect()->route('admin.dashboard');
+                case \App\Enums\RoleEnum::VISITOR->value:
+                    return redirect()->route('visitor.dashboard');
+                default:
+                    return redirect()->route('home');
             }
-
-            return redirect()->route('dashboard');
         }
 
         throw ValidationException::withMessages([
