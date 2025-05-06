@@ -26,7 +26,7 @@ class RegisteredUserController extends Controller
             'middle_name' => 'nullable|string|max:55',
             'sex' => 'required|in:male,female',
             'birthdate' => 'required|date|before:today',
-            'role' => 'required|in:student,non_student,contractor,faculty,admin',
+            'role' => 'required|in:visitor,admin',
             'street_no' => 'required|string|max:20',
             'street_name' => 'required|string|max:100',
             'barangay' => 'required|string|max:100',
