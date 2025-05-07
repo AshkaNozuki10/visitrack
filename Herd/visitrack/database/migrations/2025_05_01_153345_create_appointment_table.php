@@ -41,10 +41,10 @@ return new class extends Migration
             $table->id('appointment_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('visit_id'); // Changed from integer
-            $table->date('visit_date');
-            $table->time('visit_time');
-            $table->integer('approval');
-            $table->unsignedBigInteger('qr_code');
+            $table->date('appointment_date');
+            $table->time('appointment_time');
+            $table->integer('approval')->nullable();
+            $table->unsignedBigInteger('qr_code')->nullable();
             $table->timestamps();
 
         // Add foreign keys after all tables exist
