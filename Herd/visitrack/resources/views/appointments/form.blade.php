@@ -116,11 +116,11 @@
                                 <label for="department" class="form-label">Department of Concern*</label>
                                 <select class="form-control" id="department" name="department" required>
                                     <option value="">-- Select Department --</option>
-                                    <option value="Admissions">Admissions</option>
-                                    <option value="Registrar">Registrar</option>
-                                    <option value="Accounting">Accounting</option>
-                                    <option value="Student Affairs">Student Affairs</option>
-                                    <option value="Academic Affairs">Academic Affairs</option>
+                                    <option value="Computer ">CCS Department</option>
+                                    <option value="Education">Education Department</option>
+                                    <option value="Accounting ">Accounting Department</option>
+                                    <option value="Entrepreneurship">Entrepreneurship Department</option>
+                                    <option value="Engineering">Engineering Department</option>
                                 </select>
                                 @error('department')
                                     <div class="text-danger">{{ $message }}</div>
