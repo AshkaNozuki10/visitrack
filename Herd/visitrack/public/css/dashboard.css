@@ -21,3 +21,118 @@
 .sub-menu {
     padding-left: 20px;
 }
+
+/* Media query for iPhone XR/XS Max (414x896) */
+@media screen and (max-width: 414px) and (max-height: 896px) {
+    /* Sidebar adjustments */
+    .sidebar {
+        min-height: auto;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: linear-gradient(to right, #B45309, #D97706);
+        padding: 0.25rem;
+        max-height: 120px; /* Limit the height */
+        overflow-y: auto; /* Add scroll if needed */
+    }
+
+    .sidebar .p-4 {
+        padding: 0.25rem !important;
+    }
+
+    .sidebar .d-flex.align-items-center {
+        display: none !important;
+    }
+
+    .sidebar nav {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+    }
+
+    .sidebar-link {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.7rem;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        line-height: 1.2;
+    }
+
+    .sidebar-link:last-child {
+        border-bottom: none;
+    }
+
+    /* Appointment status links */
+    .sub-menu {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        background: rgba(217, 119, 6, 0.9);
+        padding: 0.15rem;
+        margin-top: 0.15rem;
+        border-radius: 4px;
+    }
+
+    .sub-menu .sidebar-link {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.4rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sub-menu .sidebar-link:last-child {
+        border-bottom: none;
+    }
+
+    /* Main content adjustments */
+    .col-md-9.col-lg-10 {
+        padding: 1rem !important;
+        margin-bottom: 130px; /* Reduced space for bottom navigation */
+    }
+
+    .card {
+        margin-bottom: 1rem;
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+    }
+
+    /* Map adjustments */
+    #map {
+        height: 300px;
+        margin-bottom: 1rem;
+    }
+
+    /* Information grid adjustments */
+    .row.g-4 {
+        margin: 0;
+    }
+
+    .col-md-6 {
+        padding: 0.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+
+    /* Map controls */
+    .position-absolute.top-0.end-0 {
+        position: relative !important;
+        margin: 0.5rem 0;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+}

@@ -12,10 +12,10 @@
         <div class="col-md-3 col-lg-2 px-0 sidebar">
             <div class="p-4">
                 <div class="d-flex align-items-center mb-4">
-                    <div class="bg-white rounded-circle p-2 me-2">
+                    <div class="bg-white rounded-circle p-2">
                         <i class="fas fa-user text-warning"></i>
                     </div>
-                    <a href="{{ route('visitor.dashboard') }}" class="text-decoration-none">
+                    <a href="{{ route('visitor.dashboard') }}" class="text-decoration-none me-2">
                         <h4 class="text-white">VISITOR'S DASHBOARD</h4>
                     </a>
                 </div>
