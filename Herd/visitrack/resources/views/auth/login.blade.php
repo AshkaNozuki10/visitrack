@@ -15,6 +15,23 @@
 
 <body class="bg-custom fs-5">
    <div class="container">
+
+   @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+    @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+     @endif
+
        <div class="row align-items-center" style="min-height: 80vh;">
            <!-- Left Column: Image -->
            <div class="col-md-6 d-flex justify-content-center align-items-end mt-auto" style="min-height: 80vh;">
@@ -29,17 +46,59 @@
 
                <div class="card p-4 shadow-lg rounded-5">
                    <h4 class="text-center mb-1">Login</h4>
-                   <form >
+                  <form id="login_form" action="{{ route('auth.login')}}" method="POST">
+                  @csrf
                        <!-- Email Input -->
                        <div class="mb-2 fs-5 px-3">
                            <label for="email" class="form-label">Email</label>
-                           <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                           <div class="form-group">
+                        <input type="text" 
+                            class="form-control @error('username') is-invalid @enderror" 
+                            name="username"
+                            value="{{ old('username') }}"
+                            placeholder="Username:"
+                            required
+                            autocomplete="username">
+                        @error('username')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                        </div>
+
                        <!-- Password Input -->
                        <div class="mb-2 fs-5 px-3">
                            <label for="password" class="form-label">Password</label>
-                           <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                           <div class="form-group">
+                        <input type="password" 
+                            class="form-control @error('password') is-invalid @enderror"
+                            name="password"
+                            placeholder="Password:"
+                            required
+                            autocomplete="current-password">
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                        </div>
+
+                       <!-- Remember Me -->
+                       <div class="mb-2 fs-5 px-3">
+                        <div class="remember-me">
+                            <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                            <label for="remember">Remember me</label>
+                        </div>
+                    </div>
+
+                    @if(session('error'))
+                    <div class="alert alert-danger">
+                        <strong>Error:</strong> {{ session('error') }}
+                    </div>
+                    @endif
+
                        <!-- Login Button -->
                        <div class="px-5">
                            <button type="submit" class="btn btn-primary fw-bold ms-5" style="background-color: #7749F8;">
@@ -51,6 +110,9 @@
                    <div class="text-center mt-1 fs-6">
                        <a href="#" class="text-primary">Forgot Password?</a>
                    </div>
+
+                   <a href="{{ route('auth.registration') }}" class="text-center mt-1 fs-6">Create an account</a></a>
+                   
                </div>
                <p class="text-center mt-2">Create a peaceful environment.</p>
            </div>   

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VisiTrack - Register</title>
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .required { color: red; }
@@ -35,9 +36,9 @@
         }
     </style>
 </head>
-<body>
+<body class="bg-custom fs-5">
     @include('partials.nav')
-    <div class="container mt-5">
+    <div class="container mt-5 mb-4">
         <div class="header text-center mb-4">
             <h1>Register</h1>
         </div>
