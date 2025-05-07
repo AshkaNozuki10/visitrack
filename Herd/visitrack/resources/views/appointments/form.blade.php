@@ -61,37 +61,128 @@
                     </div>
                     <form action="{{ route('appointment.store') }}" method="POST">
                         @csrf
-                    <div class="row mb-4">
-                        <div class="col-md-6 mb-3">
-                            <label for="appointment_date" class="form-label">Appointment Date</label>
-                            <input type="date" 
-                                   class="form-control" 
-                                   id="appointment_date" 
-                                   placeholder="Enter your preferred date"
-                                   name="appointment_date"
-                                   value="{{ old('appointment_date') }}"
-                                   required>
-                            @error('appointment_date')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="appointment_time" class="form-label">Appointment Time</label>
-                            <input type="time" 
-                                   class="form-control" 
-                                   id="appointment_time" 
-                                   placeholder="Enter your preferred time"
-                                   name="appointment_time"
-                                   value="{{ old('appointment_time') }}"
-                                   required>
-                            @error('appointment_time')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                        
+                        <!-- Transaction Type -->
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="transaction_type" class="form-label">Appointment or Walk-In*</label>
+                                <select class="form-control" id="transaction_type" name="transaction_type" required>
+                                    <option value="">-- Select Type --</option>
+                                    <option value="appointment">Appointment</option>
+                                    <option value="walk_in">Walk-In</option>
+                                </select>
+                                @error('transaction_type')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
 
-                            <button type="submit" class="submit-btn">Submit</button>
+                        <!-- Entity -->
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="entity" class="form-label">Transaction With: (Entity)*</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="entity" 
+                                       placeholder="Enter entity name"
+                                       name="entity"
+                                       value="{{ old('entity') }}"
+                                       required>
+                                @error('entity')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
 
-                    </div>
+                        <!-- Purpose of Visit -->
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="purpose" class="form-label">Purpose of Visit*</label>
+                                <textarea class="form-control" 
+                                          id="purpose" 
+                                          placeholder="Enter purpose of visit"
+                                          name="purpose"
+                                          rows="3"
+                                          required>{{ old('purpose') }}</textarea>
+                                @error('purpose')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Department of Concern -->
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="department" class="form-label">Department of Concern*</label>
+                                <select class="form-control" id="department" name="department" required>
+                                    <option value="">-- Select Department --</option>
+                                    <option value="Admissions">Admissions</option>
+                                    <option value="Registrar">Registrar</option>
+                                    <option value="Accounting">Accounting</option>
+                                    <option value="Student Affairs">Student Affairs</option>
+                                    <option value="Academic Affairs">Academic Affairs</option>
+                                </select>
+                                @error('department')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Building Selection -->
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="building" class="form-label">Select Building*</label>
+                                <select class="form-control" id="building" name="building" required>
+                                    <option value="">-- Select Building --</option>
+                                    <option value="Gymnasium">Gymnasium</option>
+                                    <option value="Administration Building">Administration Building</option>
+                                    <option value="UrbanFarm">QCU Urban Farm Zone</option>
+                                    <option value="KoreanPhilBldg">Korphil Building</option>
+                                    <option value="ChedBldg">CHED Building</option>
+                                    <option value="EntrepZone">QCU Entrep Zone</option>
+                                    <option value="BelmonteBuilding">Belmonte Building</option>
+                                    <option value="NewAcademicBuilding">Academic Building</option>
+                                    <option value="QuarantineZone">Quarantine Zone</option>
+                                    <option value="IK Building">Auditorium Building</option>
+                                </select>
+                                @error('building')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Date/Time Selection -->
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="appointment_date" class="form-label">Appointment Date*</label>
+                                <input type="date" 
+                                       class="form-control" 
+                                       id="appointment_date" 
+                                       placeholder="Enter your preferred date"
+                                       name="appointment_date"
+                                       value="{{ old('appointment_date') }}"
+                                       required>
+                                @error('appointment_date')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="appointment_time" class="form-label">Appointment Time*</label>
+                                <input type="time" 
+                                       class="form-control" 
+                                       id="appointment_time" 
+                                       placeholder="Enter your preferred time"
+                                       name="appointment_time"
+                                       value="{{ old('appointment_time') }}"
+                                       required>
+                                @error('appointment_time')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>
