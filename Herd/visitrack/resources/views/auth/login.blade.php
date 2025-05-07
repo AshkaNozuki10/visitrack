@@ -108,7 +108,7 @@
                    </form>  
                    <!-- Forgot Password Link -->
                    <div class="text-center mt-1 fs-6">
-                       <a href="#" class="text-primary">Forgot Password?</a>
+                       <a href="{{ route('forgotpass') }}" class="text-primary">Forgot Password?</a>
                    </div>
 
                    <a href="{{ route('auth.registration') }}" class="text-center mt-1 fs-6">Create an account</a></a>

@@ -28,6 +28,21 @@ Route::get('/register', [RegisteredUserController::class, 'showRegistrationForm'
 Route::post('/login', [LoginController::class, 'authenticateUser'])->middleware('throttle:3,5')->name('auth.login');
 Route::post('/register', [RegisteredUserController::class, 'register'])->name('auth.registration');
 
+//Forgot Password Page
+Route::get('/forgotpass', function () {
+    return view('auth.forgotpass');
+})->name('forgotpass');
+
+//Verification Page
+Route::get('/verify', function () {
+    return view('auth.verify');
+})->name('verify');
+
+//Reset Password Page
+Route::get('/reset-password', function () {
+    return view('auth.reset-password');
+})->name('reset-password');
+
 //Logout
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
