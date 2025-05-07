@@ -14,7 +14,7 @@
 </head>
 <body class="bg-custom">
     <!-- Section 1 -->
-    <section class="full-height">
+    <section class="full-height" style="padding-top: 6rem;">
     <div class="container">
         <div class="row align-items-center">
             <!-- Image Column -->
