@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use App\Enums\RoleEnum;
 
 class AdminMiddleware
 {
@@ -16,19 +17,16 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-
         if(Auth::check()){
-            if(Auth::user()->role_as == 'admin') {
+            if(Auth::user()->information->role === 'admin') {
                 return $next($request);
             }
             else{
-                return redirect('/')->with('status', 'You are not allowed to access this page');
+                return redirect('/')->with('status', 'Access denied: Admin privileges required');
             }
         }
-
         else{
             return redirect('/login')->with('status', 'Please login to access this page');
         }
-
     }
 }

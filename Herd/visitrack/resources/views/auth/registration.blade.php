@@ -117,20 +117,12 @@
                             <label>Role: <span class="required">*</span></label>
                             <div class="radio-group">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input @error('role') is-invalid @enderror" type="radio" id="student" name="role" value="student" {{ old('role') == 'student' ? 'checked' : '' }} required>
-                                    <label class="form-check-label" for="student">Student</label>
+                                    <input class="form-check-input" type="radio" id="visitor" name="role" value="visitor" {{ old('role') == 'visitor' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="visitor">Visitor</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="non_student" name="role" value="non_student" {{ old('role') == 'non_student' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="non_student">Non Student</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="contractor" name="role" value="contractor" {{ old('role') == 'contractor' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="contractor">Contractor</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="faculty" name="role" value="faculty" {{ old('role') == 'faculty' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="faculty">Faculty</label>
+                                    <input class="form-check-input" type="radio" id="admin" name="role" value="admin" {{ old('role') == 'admin' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="admin">Admin</label>
                                 </div>
                                 @error('role')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -196,7 +188,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="email">Email: <span class="required">*</span></label>
-                            <input type="email" class="form-control @error('username') is-invalid @enderror" id="email" name="username" value="{{ old('username') }}" required>
+                            <input type="email" class="form-control @error('username') is-invalid @enderror" id="username" name="username" value="{{ old('username') }}" required>
                             @error('username')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -219,7 +211,7 @@
                 </div>
 
                 <div class="form-buttons">
-                    <a href="{{ route('show.login') }}" class="btn btn-secondary">Cancel</a>
+                    <a href="{{ route('login') }}" class="btn btn-secondary">Cancel</a>
                     <button type="submit" class="btn btn-primary">Register</button>
                 </div>
 

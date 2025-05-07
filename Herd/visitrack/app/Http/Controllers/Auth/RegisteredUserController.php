@@ -70,7 +70,7 @@ class RegisteredUserController extends Controller
             Log::info('Registration successful', ['user_id' => $information->user_id]);
 
             return redirect()
-                ->route('show.login')
+                ->route('login')
                 ->with('status', 'Registration successful! Please login.');
 
         } catch(\Exception $e) {

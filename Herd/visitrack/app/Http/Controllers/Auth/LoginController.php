@@ -60,21 +60,36 @@ class LoginController extends BaseController
 
             $user = Auth::user();
             
+            // Add debug logging
+            \Log::info('User authenticated', [
+                'user_id' => $user->credential_id,
+                'has_information' => $user->information ? 'yes' : 'no',
+                'role' => $user->information->role ?? 'undefined'
+            ]);
+            
             // Redirect based on user role
-            // Access role through the information relationship
-            switch ($user->information->role) {
-                case \App\Enums\RoleEnum::ADMIN->value:
-                    return redirect()->route('admin.dashboard');
-                case \App\Enums\RoleEnum::VISITOR->value:
-                    return redirect()->route('visitor.dashboard');
-                default:
-                    return redirect()->route('home');
+            try {
+                switch ($user->information->role) {
+                    case 'admin': // Changed from RoleEnum::ADMIN->value to string
+                        return redirect()->route('admin.dashboard');
+                    case 'visitor': // Changed from RoleEnum::VISITOR->value to string
+                        return redirect()->route('visitor.dashboard');
+                    default:
+                        return redirect()->route('home');
+                }
+            } catch (\Exception $e) {
+                \Log::error('Error during role redirect', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+                return redirect()->route('home')->with('error', 'Role assignment error');
             }
         }
 
-        throw ValidationException::withMessages([
-            'username' => [trans('auth.failed')],
-        ]);
+        // Return with a user-friendly error message instead of throwing an exception
+        return redirect()->back()
+            ->withInput($request->except('password'))
+            ->with('error', 'Invalid credentials. Please check your username and password and try again.');
     }
 
     /**

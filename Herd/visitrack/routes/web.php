@@ -69,7 +69,52 @@ Route::get('/test-visitor-dashboard', function () {
     return view('visitor_dashboard');
 })->name('test.visitor.dashboard');
 
+Route::get('/debug-auth', function () {
+    if (Auth::check()) {
+        $user = Auth::user();
+        try {
+            $info = $user->information;
+            $role = $info ? $info->role : 'No role found';
+            $roleEnum = \App\Enums\RoleEnum::VISITOR->value;
+            
+            return [
+                'authenticated' => true,
+                'user_id' => $user->credential_id,
+                'has_info' => $info ? true : false,
+                'role' => $role,
+                'expected_role' => $roleEnum,
+                'is_visitor' => ($role === $roleEnum),
+                'redirect_url' => route('visitor.dashboard')
+            ];
+        } catch (\Exception $e) {
+            return [
+                'authenticated' => true, 
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ];
+        }
+    }
+    
+    return ['authenticated' => false];
+})->name('debug.auth');
+
+// Location tracking routes
+Route::middleware(['auth'])->group(function () {
+    Route::post('/location/update', [LocationController::class, 'updateLocationFromFrontend'])->name('location.update');
+    Route::get('/location/check', [LocationController::class, 'checkLocationStatus'])->name('location.check');
+});
+
 // Appointment and QR routes
 Route::post('/appointments/{appointment}/approve', [AppointmentController::class, 'approve'])->name('appointments.approve');
 Route::post('/qr/scan', [QRScanController::class, 'scan'])->name('qr.scan');
 Route::post('/tracking/stop', [QRScanController::class, 'stopTracking'])->name('tracking.stop');
+
+Route::get('/appointment/forms', function () {
+    return view('appointments.form');
+})->name('appointment.form');
+
+Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointment.store');
+
+Route::get('/appointments/approved', [AppointmentController::class, 'getApprovedAppointments'])->name('appointments.approved');
+Route::get('/appointments/pending', [AppointmentController::class, 'showPendingAppointments'])->name('appointments.pending');
+Route::get('/appointments/rejected', [AppointmentController::class, 'showRejectedAppointment'])->name('appointments.rejected');

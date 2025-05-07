@@ -6,8 +6,9 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use App\Enums\RoleEnum;
 
-class StudentMiddleware
+class VisitorMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,17 +18,15 @@ class StudentMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::check()){
-            if(Auth::user()->role_as == 'student') {
+            if(Auth::user()->information->role === 'visitor') {
                 return $next($request);
             }
             else{
-                return redirect('/')->with('status', 'You are not allowed to access this page');
+                return redirect('/')->with('status', 'Access denied: Visitor privileges required');
             }
         }
-
         else{
             return redirect('/login')->with('status', 'Please login to access this page');
         }
-
     }
 }

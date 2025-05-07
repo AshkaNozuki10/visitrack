@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('middle_name')->nullable();
             $table->enum('sex', ['male', 'female']);
             $table->date('birthdate');
-            $table->enum('role', ['student', 'non_student', 'admin', 'faculty', 'contractor']);
+            $table->enum('role', ['visitor', 'admin']);
             $table->timestamps();
         });
 

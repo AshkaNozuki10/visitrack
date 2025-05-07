@@ -12,17 +12,21 @@ class Appointment extends Model
     protected $fillable = [
         'user_id',
         'visit_id',
-        'visit_date',
-        'visit_time',
+        'appointment_date',
+        'appointment_time',
         'approval',
         'qr_code',
-        'status',
         'approved_at'
     ];
 
     public function qrCode()
     {
-        return $this->hasOne(QrCode::class, 'appointment_id');
+        return $this->belongsTo(QrCode::class, 'qr_code', 'qr_id');
+    }
+
+    public function visit()
+    {
+        return $this->belongsTo(Visit::class, 'visit_id', 'visit_id');
     }
 
     public function user()

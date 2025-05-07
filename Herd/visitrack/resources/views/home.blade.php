@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visitrack - Home</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">  
     <link rel="stylesheet" href="{{ asset('css/partials.css') }}">
-<!-- Nav Bar -->
- @include('partials.nav');
 
+    <!-- Nav Bar -->
+    @include('partials.nav')
+</head>
 <body>
     <!-- Section 1 -->
 
@@ -83,6 +84,6 @@
 </body>
 
 <!-- Footer -->
-@include('partials.footer');
+@include('partials.footer')
 
 </html>
