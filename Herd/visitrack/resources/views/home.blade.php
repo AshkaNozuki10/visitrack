@@ -8,13 +8,14 @@
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">  
     <link rel="stylesheet" href="{{ asset('css/partials.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Nav Bar -->
-    @include('partials.nav')
+    @include('partials.nav', ['hideLinks' => false])
 </head>
-<body class="bg-custom">
+<body class="bg-custom fs-5">
     <!-- Section 1 -->
-    <section class="full-height" style="padding-top: 6rem;">
+    <section class="full-height">
     <div class="container">
         <div class="row align-items-center">
             <!-- Image Column -->
@@ -22,14 +23,17 @@
                 <img src="{{ asset('css/img/building.png') }}" alt="Lab building" class="img-fluid w-100">
             </div>
             <!-- Text Column -->
-            <div class="col-md-6">
+            <div class="col-md-6" style="padding-bottom: 15rem;">
                 <p class="h2">A REAL TIME LOCATION TRACKER FOR QCU VISITORS</p>
-                <p>At Quezon City University, We Believe In Creating A Safe And <br> Connected Environment For Our Students,
-                    Faculty, And Staff. That's <br> Why We've Developed A Cutting-Edge Location Tracking System To <br>
+                <p>At Quezon City University, We Believe In Creating A Safe And Connected Environment For Our Students,
+                    Faculty, And Staff. That's Why We've Developed A Cutting-Edge Location Tracking System To
                     Enhance Campus Security And Give You Peace Of Mind.</p>
-                <div>
-                    <a href="#" class="btn btn-primary register_btn">Register</a>
-                    <a href="#terms" class="btn btn-secondary contact_btn">Contact Us</a>
+                    <br>
+                 <div class="d-flex align-items-center">
+                    <a href="#" class="btn btn-light signup_btn rounded-pill fw-bold fs-3 px-5 m-auto">Register</a>
+                    <a href="#terms" class="btn border border-white text-white fw-bold fs-3 px-4 ms-auto">Contact Us</a>
+             
+                    </div>  
                 </div>
             </div>
         </div>  
@@ -97,6 +101,10 @@
         </div>
  <!-- Row 2: Image on the right, text on the left -->
  <div class="row align-items-center">
+     <!-- Image Column -->
+     <div class="col-md-6">
+                <img src="{{ asset('css/img/security.png') }}" alt="security image" class="img-fluid">
+            </div>
             <!-- Text Column -->
             <div class="col-md-6">
                 <h1>JOIN THE MOVEMENT FOR A SAFER, <br>PRIVACY-FOCUSED CAMPUS</h1>
@@ -104,10 +112,7 @@
                     You Experience Campus Life. Sign Up Today<br> and Take the First Step Towards a More Secure, Connected,
                     and<br> Empowered University Community.</p>
             </div>
-            <!-- Image Column -->
-            <div class="col-md-6">
-                <img src="{{ asset('css/img/security.png') }}" alt="security image" class="img-fluid">
-            </div>
+           
         </div>
         </div>
 </section>

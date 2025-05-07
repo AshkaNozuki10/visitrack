@@ -1,7 +1,12 @@
  <!-- Footer Section -->
- <footer class="footer">
-     <div class="section6">
-         <p>&copy; 2025 Visitrack. All rights reserved.</p>
-         <p id="terms">Terms and Security.</p>
-     </div>
- </footer>
+ 
+ <footer class="footer bg-black text-white py-3 mt-auto">
+    <div class="container d-flex justify-content-between align-items-center">
+        <!-- Left Side: Year and Title -->
+        <p>&copy; 2025 Visitrack. All rights reserved.</p>
+
+        <!-- Right Side: Security Terms -->
+        <a href="#terms" class="text-white text-decoration-none">Security Terms</a>
+    </div>
+</footer>
+ 
