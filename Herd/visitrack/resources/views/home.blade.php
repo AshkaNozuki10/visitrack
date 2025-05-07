@@ -44,7 +44,7 @@
     <!-- Section 2 -->
 
     <section>
-    <div class="container">
+    <div id="section2" class="container">
        
         <div class="row align-items-center mb-5">
             <!-- Text Column -->
@@ -85,11 +85,11 @@
         <div class="row align-items-center mb-5">
         <!-- Text Column -->
              <div class="col-md-6">
-                <h1>UNLOCK THE FULL POTENTIAL <br>OF CAMPUS LIFE</h1>
-                <p>Experience the Freedom to Explore Your University to the Fullest,<br> Knowing That Your Location Is Being
-                    Monitored for Your Protection<br> Using Open-Source Technology. Engage with the Vibrant Campus<br>
-                    Community, Participate in Extracurricular Activities, and Make the<br> Most of Your University
-                    Experience - All While Enjoying the Security<br> of Our Advanced Location Tracking System.</p>
+                <h1>UNLOCK THE FULL POTENTIAL OF CAMPUS LIFE</h1>
+                <p>Experience the Freedom to Explore Your University to the Fullest, Knowing That Your Location Is Being
+                    Monitored for Your Protection Using Open-Source Technology. Engage with the Vibrant Campus
+                    Community, Participate in Extracurricular Activities, and Make the Most of Your University
+                    Experience - All While Enjoying the Security of Our Advanced Location Tracking System.</p>
             </div>
         
       
@@ -107,10 +107,10 @@
             </div>
             <!-- Text Column -->
             <div class="col-md-6">
-                <h1>JOIN THE MOVEMENT FOR A SAFER, <br>PRIVACY-FOCUSED CAMPUS</h1>
-                <p>Discover How Quezon City University's Openstreetmap-Powered Location<br> Tracker Can Transform the Way
-                    You Experience Campus Life. Sign Up Today<br> and Take the First Step Towards a More Secure, Connected,
-                    and<br> Empowered University Community.</p>
+                <h1>JOIN THE MOVEMENT FOR A SAFER, PRIVACY-FOCUSED CAMPUS</h1>
+                <p>Discover How Quezon City University's Openstreetmap-Powered Location Tracker Can Transform the Way
+                    You Experience Campus Life. Sign Up Today and Take the First Step Towards a More Secure, Connected,
+                    and Empowered University Community.</p>
             </div>
            
         </div>
