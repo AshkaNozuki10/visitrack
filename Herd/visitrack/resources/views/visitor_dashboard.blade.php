@@ -7,7 +7,13 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row">
+    <!-- Hamburger menu for mobile -->
+    <div class="mobile-navbar">
+        <button id="sidebarToggle" class="btn btn-warning">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+    <div class="row flex-nowrap">
         <!-- Sidebar -->
         <div class="col-md-3 col-lg-2 px-0 sidebar">
             <div class="p-4">
@@ -15,7 +21,7 @@
                     <div class="bg-white rounded-circle p-2">
                         <i class="fas fa-user text-warning"></i>
                     </div>
-                    <a href="{{ route('visitor.dashboard') }}" class="text-decoration-none me-2">
+                    <a href="{{ route('visitor.dashboard') }}" class="text-decoration-none">
                         <h4 class="text-white">VISITOR'S DASHBOARD</h4>
                     </a>
                 </div>
@@ -53,7 +59,7 @@
         </div>
 
         <!-- Main Content -->
-        <div class="col-md-9 col-lg-10 p-4">
+        <div class="col-md-9 col-lg-10 p-4 main-content">
             <div class="card shadow">
                 <div class="card-body">
                     <h2 class="card-title mb-4">QUEZON CITY UNIVERSITY MAP</h2>
@@ -535,5 +541,22 @@
         .catch(error => {
             console.error('Error checking tracking status:', error);
         });
+
+    // Sidebar toggle logic for mobile
+    const sidebar = document.querySelector('.sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('sidebar-open');
+        });
+        // Optional: close sidebar when clicking outside
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 414 && sidebar.classList.contains('sidebar-open')) {
+                if (!sidebar.contains(e.target) && e.target !== sidebarToggle) {
+                    sidebar.classList.remove('sidebar-open');
+                }
+            }
+        });
+    }
 </script>
 @endsection
