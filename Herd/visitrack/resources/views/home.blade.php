@@ -9,11 +9,62 @@
     <link rel="stylesheet" href="{{ asset('css/partials.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+       
+    </style>
 
     <!-- Nav Bar -->
     @include('partials.nav', ['hideLinks' => false])
 </head>
 <body class="bg-custom fs-5">
+    <!-- Privacy Policy Modal -->
+    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title mx-auto" id="privacyModalLabel">Privacy Policy & Terms of Service</h5>
+                </div>
+                <div class="modal-body">
+                    <h4>Privacy Policy</h4>
+                    <p>At Quezon City University, we take your privacy seriously. This privacy policy explains how we collect, use, and protect your personal information when you use our location tracking system.</p>
+                    
+                    <h5>Information We Collect:</h5>
+                    <ul>
+                        <li>Location data while you are on campus</li>
+                        <li>Basic personal information for registration</li>
+                        <li>Device information for security purposes</li>
+                    </ul>
+
+                    <h5>How We Use Your Information:</h5>
+                    <ul>
+                        <li>To provide real-time location tracking services</li>
+                        <li>To enhance campus security</li>
+                        <li>To improve our services</li>
+                    </ul>
+
+                    <h4>Terms of Service</h4>
+                    <p>By using our location tracking system, you agree to:</p>
+                    <ul>
+                        <li>Provide accurate information during registration</li>
+                        <li>Use the system responsibly and ethically</li>
+                        <li>Not misuse or attempt to manipulate the tracking system</li>
+                        <li>Comply with all university policies and regulations</li>
+                    </ul>
+                </div>
+                <div class="modal-footer d-flex flex-column align-items-center">
+                    <div class="form-check mb-3 text-center">
+                        <input class="form-check-input" type="checkbox" id="privacyCheck">
+                        <label class="form-check-label" for="privacyCheck">
+                            I have read and agree to the Privacy Policy and Terms of Service
+                        </label>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="acceptPrivacy" disabled>Accept and Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Section 1 -->
     <section class="full-height">
     <div class="container">
@@ -118,7 +169,41 @@
 </section>
 </body>
 
-</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Create the modal instance
+        const modalElement = document.getElementById('privacyModal');
+        const modal = new bootstrap.Modal(modalElement, {
+            backdrop: 'static',
+            keyboard: false
+        });
+        
+        // Show modal on page load
+        modal.show();
+
+        // Handle checkbox
+        const privacyCheck = document.getElementById('privacyCheck');
+        const acceptButton = document.getElementById('acceptPrivacy');
+
+        privacyCheck.addEventListener('change', function() {
+            acceptButton.disabled = !this.checked;
+        });
+
+        // Handle accept button
+        acceptButton.addEventListener('click', function() {
+            modal.hide();
+            // Remove the modal backdrop
+            const backdrop = document.querySelector('.modal-backdrop');
+            if (backdrop) {
+                backdrop.remove();
+            }
+            // Remove modal-open class from body
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+        });
+    });
+</script>
 
 <!-- Footer -->
 @include('partials.footer')

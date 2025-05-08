@@ -398,3 +398,24 @@
         font-size: 2rem !important;
     }
 }
+
+/* Modal styles */
+
+.modal-body {
+    color: #1a237e;
+}
+.modal-body h4 {
+    color: #0c408d;
+    font-weight: bold;
+}
+.modal-body h5 {
+    color: #1255a1;
+    font-weight: bold;
+}
+.modal-body ul li {
+    color: #1a237e;
+    margin-bottom: 8px;
+}
+.form-check-label {
+    color: #1a237e;
+}
