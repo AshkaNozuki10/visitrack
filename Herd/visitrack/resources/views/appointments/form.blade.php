@@ -55,23 +55,32 @@
             <div class="card shadow">
                 <div class="card-body">
                     <h2 class="card-title mb-4">VISITOR'S APPOINTMENT FORM</h2>
+                    @if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
                     <!-- Map Container -->
                     <div class="position-relative mb-4">
                     </div>
-                    <form action="{{ route('appointment.store') }}" method="POST">
+                    <form action="{{ route('appointment.form') }}" method="POST">
                         @csrf
                         
                         <!-- Transaction Type -->
                         <div class="row mb-4">
                             <div class="col-md-6 mb-3">
-                                <label for="transaction_type" class="form-label">Appointment or Walk-In*</label>
-                                <select class="form-control" id="transaction_type" name="transaction_type" required>
+                                <label for="appointment_type" class="form-label">Appointment or Walk-In*</label>
+                                <select class="form-control" id="appointment_type" name="appointment_type" required>
                                     <option value="">-- Select Type --</option>
                                     <option value="appointment">Appointment</option>
                                     <option value="walk_in">Walk-In</option>
                                 </select>
-                                @error('transaction_type')
+                                @error('appointment_type')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
