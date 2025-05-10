@@ -5,111 +5,90 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
-class LoginController extends BaseController    
+class LoginController extends Controller
 {
-    use AuthorizesRequests, ValidatesRequests;
-
     /**
-     * Create a new controller instance.
+     * Handle the login request
      */
-    /*
-    public function __construct()
+    public function authenticateUser(Request $request)
     {
-        $this->middleware('student')->except('logout');
-    }
-    */
-
-    /**
-     * Show the login form.
-     */
-
-    public function __construct()
-    {
-        $this->middleware('throttle:3,5')->only(['authenticateUser', 'showLogin']);
-    }
-
-    public function showLogin(): View
-    {
-        return view('auth.login'); // Changed to standard auth.login location
-    }
-
-    /**
-     * Authenticate the user.
-     */
-    public function authenticateUser(Request $request): RedirectResponse
-    {
-        $credentials = $request->validate([
-            'username' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
-            'remember' => ['sometimes', 'boolean'],
+        Log::info('Login attempt started', [
+            'username' => $request->username,
+            'session_id' => session()->getId()
         ]);
 
-        if (Auth::attempt([
-            'username' => $credentials['username'],
-            'password' => $credentials['password']
-        ], $request->boolean('remember'))) {
-            $request->session()->regenerate();  
+        $credentials = $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ]);
 
+        // Clear any existing session data
+        Session::flush();
+        
+        // Attempt to authenticate the user using username
+        if (Auth::attempt([
+            'username' => $credentials['username'], 
+            'password' => $credentials['password']
+        ], $request->filled('remember'))) {
+            
+            // Get the user before regenerating session
             $user = Auth::user();
             
-            // Add debug logging
-            \Log::info('User authenticated', [
-                'user_id' => $user->credential_id,
-                'has_information' => $user->information ? 'yes' : 'no',
-                'role' => $user->information->role ?? 'undefined'
-            ]);
+            // Regenerate session
+            $request->session()->regenerate();
             
-            // Redirect based on user role
-            try {
-                switch ($user->information->role) {
-                    case 'admin': // Changed from RoleEnum::ADMIN->value to string
-                        return redirect()->route('admin.dashboard');
-                    case 'visitor': // Changed from RoleEnum::VISITOR->value to string
-                        return redirect()->route('visitor.dashboard');
-                    default:
-                        return redirect()->route('home');
-                }
-            } catch (\Exception $e) {
-                \Log::error('Error during role redirect', [
-                    'error' => $e->getMessage(),
-                    'trace' => $e->getTraceAsString()
-                ]);
-                return redirect()->route('home')->with('error', 'Role assignment error');
+            Log::info('Authentication successful', [
+                'session_id' => session()->getId(),
+                'user_id' => $user->credential_id,
+                'auth_id' => Auth::id(),
+                'session_data' => session()->all()
+            ]);
+
+            // Check user role and redirect accordingly
+            Log::info('User authenticated', [
+                'user_id' => $user->credential_id,
+                'has_info' => $user->information ? true : false,
+                'role' => $user->information ? $user->information->role : 'no role',
+                'session_id' => session()->getId()
+            ]);
+
+            if ($user->information && $user->information->role === 'admin') {
+                Log::info('Redirecting to admin dashboard');
+                return redirect()->route('admin.dashboard');
+            } else {
+                Log::info('Redirecting to visitor dashboard');
+                return redirect()->route('visitor.dashboard');
             }
         }
 
-        // Return with a user-friendly error message instead of throwing an exception
-        return redirect()->back()
-            ->withInput($request->except('password'))
-            ->with('error', 'Invalid credentials. Please check your username and password and try again.');
+        Log::warning('Authentication failed', [
+            'username' => $request->username,
+            'session_id' => session()->getId()
+        ]);
+        
+        // Authentication failed
+        return back()->withErrors([
+            'username' => 'The provided credentials do not match our records.',
+        ])->withInput($request->except('password'));
     }
 
     /**
-     * Log the user out.
+     * Log the user out
      */
-    public function logout(Request $request): RedirectResponse
+    public function logout(Request $request)
     {
+        Log::info('Logout attempt', [
+            'user_id' => Auth::id(),
+            'session_id' => session()->getId()
+        ]);
+        
         Auth::logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
         return redirect('/');
-    }
-
-    /**
-     * Get the login username to be used by the controller.
-     */
-    public function username(): string
-    {
-        return 'username';
     }
 }
