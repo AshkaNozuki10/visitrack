@@ -48,15 +48,15 @@
                    <h4 class="text-center mb-1">Login</h4>
                   <form id="login_form" action="{{ route('auth.login')}}" method="POST">
                   @csrf
-                       <!-- Email Input -->
+                       <!-- Username Input -->
                        <div class="mb-2 fs-5 px-3">
-                           <label for="email" class="form-label">Email</label>
+                           <label for="username" class="form-label">Username</label>
                            <div class="form-group">
                         <input type="text" 
                             class="form-control @error('username') is-invalid @enderror" 
                             name="username"
                             value="{{ old('username') }}"
-                            placeholder="Username:"
+                            placeholder="Enter your username"
                             required
                             autocomplete="username">
                         @error('username')
@@ -111,7 +111,9 @@
                        <a href="{{ route('forgotpass') }}" class="text-primary">Forgot Password?</a>
                    </div>
 
-                   <a href="{{ route('auth.registration') }}" class="text-center mt-1 fs-6">Create an account</a></a>
+                   <div class="text-center mt-1 fs-6">
+                       <a href="{{ route('show.register') }}" class="text-primary">Create an account</a>
+                   </div>
                    
                </div>
                <p class="text-center mt-2">Create a peaceful environment.</p>
