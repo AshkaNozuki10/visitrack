@@ -15,6 +15,9 @@ class Authenticate
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (! $request->expectsJson()) {
+            return redirect()->route('auth.login');
+        }
         return $next($request);
     }
 }
