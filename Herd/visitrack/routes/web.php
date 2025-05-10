@@ -9,6 +9,8 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GenerateQr;
 use App\Models\appointment;
+use App\Http\Controllers\AdminDashboardController;
+use Illuminate\Support\Facades\Auth;
 
 // Public routes
 //Homepage
@@ -57,10 +59,7 @@ Route::get('/db-test', function () {
 // Role-protected routes
 // Admin routes
 Route::middleware(['auth', 'admin'])->group(function () {
-Route::get('/admin-dashboard', function () {
-    return view('admin_dashboard');
-})->name('admin.dashboard');
-
+    Route::get('/admin-dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 });
 // Visitor routes
 Route::middleware(['auth', 'visitor'])->group(function () {
@@ -84,22 +83,20 @@ Route::get('/test-visitor-dashboard', function () {
     return view('visitor_dashboard');
 })->name('test.visitor.dashboard');
 
+// Debug route
 Route::get('/debug-auth', function () {
     if (Auth::check()) {
         $user = Auth::user();
         try {
             $info = $user->information;
             $role = $info ? $info->role : 'No role found';
-            $roleEnum = \App\Enums\RoleEnum::VISITOR->value;
             
             return [
                 'authenticated' => true,
                 'user_id' => $user->credential_id,
                 'has_info' => $info ? true : false,
                 'role' => $role,
-                'expected_role' => $roleEnum,
-                'is_visitor' => ($role === $roleEnum),
-                'redirect_url' => route('visitor.dashboard')
+                'redirect_url' => $role === 'admin' ? route('admin.dashboard') : route('visitor.dashboard')
             ];
         } catch (\Exception $e) {
             return [
