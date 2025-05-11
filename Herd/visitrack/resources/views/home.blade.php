@@ -10,9 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <style>
-       
-    </style>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
     <!-- Nav Bar -->
     @include('partials.nav', ['hideLinks' => false])
@@ -81,8 +79,13 @@
                     Enhance Campus Security And Give You Peace Of Mind.</p>
                     <br>
                  <div class="d-flex align-items-center">
-                    <a href="#" class="btn btn-light signup_btn rounded-pill fw-bold fs-3 px-5 m-auto">Register</a>
-                    <a href="#terms" class="btn border border-white text-white fw-bold fs-3 px-4 ms-auto">Contact Us</a>
+                 <a href="{{ route('show.register') }}" type="button" class="btn btn-primary animate__animated animate__pulse animate__infinite animate__slow" style="width: 200px; background-color:rgb(252, 252, 252); color: black; border: none; border-radius: 50px; padding: 12px; font-size: 1.1rem; font-weight: 600; letter-spacing: 1px; box-shadow: 0 10px 20px rgba(90, 54, 201, 0.3);">
+                                    <i class="fas fa-sign-in-alt me-2"></i> Register
+                                </a>
+
+                                <a href="#terms" type="button" class="btn btn-primary animate__animated animate__pulse animate__infinite animate__slow ms-5" style="width: 200px; background-color: transparent; color: white; border: 1px solid white; border-radius: 50px; padding: 12px; font-size: 1.1rem; font-weight: 600; letter-spacing: 1px; box-shadow: 0 10px 20px rgba(90, 54, 201, 0.3);">
+                                    <i class="fas fa-sign-in-alt me-2"></i> Contact Us
+                                </a>
              
                     </div>  
                 </div>
