@@ -46,6 +46,11 @@ class AppointmentController extends Controller
     {
         // Validate the request data
         $validated = $request->validate([
+            'appointment_type' => 'required',
+            'entity' => 'required',
+            'purpose' => 'required',
+            'department' => 'required',
+            'building' => 'required',
             'appointment_date' => 'required|date|after:today',
             'appointment_time' => 'required'
         ]);
@@ -59,14 +64,19 @@ class AppointmentController extends Controller
             $visit->user_id = Auth::id();
             $visit->visit_date = $request->appointment_date;
             $visit->entry_time = $request->appointment_time;
-            $visit->exit_time = null; // Will be filled when user leaves
-            $visit->location = 1; // Default location, will be updated during actual visit
+            $visit->exit_time = $request->appointment_time; // Set to entry_time initially
+            $visit->location = 1; // Default to Administration Building (location_id 1)
             $visit->save();
             
             // Create the appointment with the placeholder visit_id
             $appointment = new Appointment();
             $appointment->user_id = Auth::id();
             $appointment->visit_id = $visit->visit_id;
+            $appointment->appointment_type = $request->appointment_type;
+            $appointment->entity = $request->entity;
+            $appointment->purpose = $request->purpose;
+            $appointment->department = $request->department;
+            $appointment->building = $request->building;
             $appointment->appointment_date = $request->appointment_date;
             $appointment->appointment_time = $request->appointment_time;
             $appointment->approval = null; // Will be set when approved/rejected
@@ -127,5 +137,23 @@ class AppointmentController extends Controller
             ->get();
             
         return view('appointments.rejected', compact('appointments'));
+    }
+
+    public function show(Appointment $appointment)
+    {
+        // Ensure the user can only view their own appointments
+        if ($appointment->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        return view('appointments.show', compact('appointment'));
+    }
+
+    public function reject(Appointment $appointment)
+    {
+        $appointment->update([
+            'approval' => 0
+        ]);
+        return redirect()->back()->with('success', 'Appointment has been denied.');
     }
 }
