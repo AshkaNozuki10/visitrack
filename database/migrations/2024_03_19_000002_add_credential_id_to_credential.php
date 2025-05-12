@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         // First, create a temporary table with the new structure
-        Schema::create('credential_new', function (Blueprint $table) {
+        Schema::create('credential', function (Blueprint $table) {
             $table->id('credential_id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('username')->unique();
@@ -23,14 +23,11 @@ return new class extends Migration
         });
 
         // Copy data from the old table to the new one
-        DB::statement('INSERT INTO credential_new (user_id, username, password, created_at, updated_at) 
+        DB::statement('INSERT INTO credential (user_id, username, password, created_at, updated_at) 
                       SELECT user_id, username, password, created_at, updated_at FROM credential');
 
         // Drop the old table
         Schema::drop('credential');
-
-        // Rename the new table to the original name
-        Schema::rename('credential_new', 'credential');
 
         // Add the foreign key constraint
         Schema::table('credential', function (Blueprint $table) {
@@ -38,6 +35,10 @@ return new class extends Migration
                   ->references('user_id')
                   ->on('user_information')
                   ->onDelete('cascade');
+        });
+
+         Schema::table('credential', function (Blueprint $table) {
+            $table->rememberToken();
         });
     }
 
