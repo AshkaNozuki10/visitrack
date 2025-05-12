@@ -39,22 +39,6 @@ return new class extends Migration
                   ->on('user')
                   ->onDelete('cascade');
         });
-        
-        // create the credential table as it's independent
-        Schema::create('credential', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->string('username')->unique();
-            $table->string('password');
-            $table->timestamps();
-        });
-
-        // Update credential table to add foreign key now that user_information exists
-        Schema::table('credential', function (Blueprint $table) {
-            $table->foreign('user_id')
-                  ->references('user_id')
-                  ->on('user')
-                  ->onDelete('cascade');
-        });
     }
 
     /**
@@ -64,6 +48,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('address');
         Schema::dropIfExists('user');
-        Schema::dropIfExists('credential');
     }
 };
