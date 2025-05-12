@@ -38,6 +38,11 @@ Route::get('/verify', function () {
     return view('auth.verify');
 })->name('verify');
 
+//Forgot Password Page
+Route::get('/forgot-password', function(){
+    return view('forgot_password');
+})->name('forgot.password');
+
 //Reset Password Page
 Route::get('/reset-password', function () {
     return view('auth.reset-password');
