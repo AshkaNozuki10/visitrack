@@ -2,7 +2,225 @@
 
 @section('styles')
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+<style>
+    :root {
+        --primary-color: #7749F8;
+        --secondary-color: #5a36c9;
+        --sidebar-bg: #7749F8;
+        --bg-color: #f5f7ff;
+        --text-color: #333;
+        --light-color: #ffffff;
+        --accent-color: #4a89dc;
+    }
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #6b8cce, #7749F8);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        color: var(--text-color);
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+    @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    .sidebar {
+        position: relative;
+        background: var(--sidebar-bg);
+        color: #fff;
+        min-height: 100vh;
+        border-radius: 24px 0 0 24px;
+        box-shadow: 0 8px 32px rgba(119, 73, 248, 0.15);
+        margin: 16px 0 16px 16px;
+        padding: 0;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .sidebar::before {
+        content: '';
+        position: absolute;
+        top: -60px;
+        right: -60px;
+        width: 160px;
+        height: 160px;
+        background: rgba(255,255,255,0.10);
+        border-radius: 50%;
+        z-index: 0;
+        animation: sidebarPulse 6s ease-in-out infinite;
+    }
+    @keyframes sidebarPulse {
+        0%, 100% { transform: scale(1) translateY(0); opacity: 0.7; }
+        50% { transform: scale(1.15) translateY(20px); opacity: 1; }
+    }
+    .sidebar-content {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+    .sidebar-animated {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+        animation: fadeInUpSidebar 0.7s forwards;
+    }
+    .sidebar-animated:nth-child(1) { animation-delay: 0.1s; }
+    .sidebar-animated:nth-child(2) { animation-delay: 0.2s; }
+    .sidebar-animated:nth-child(3) { animation-delay: 0.3s; }
+    .sidebar-animated:nth-child(4) { animation-delay: 0.4s; }
+    .sidebar-animated:nth-child(5) { animation-delay: 0.5s; }
+    .sidebar-animated:nth-child(6) { animation-delay: 0.6s; }
+    .sidebar-animated:nth-child(7) { animation-delay: 0.7s; }
+    .sidebar-animated:nth-child(8) { animation-delay: 0.8s; }
+    .sidebar-animated:nth-child(9) { animation-delay: 0.9s; }
+    .sidebar-animated:nth-child(10) { animation-delay: 1.0s; }
+    @keyframes fadeInUpSidebar {
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+    .sidebar-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+    .sidebar-icon {
+        background: #fff;
+        border-radius: 50%;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+    }
+    .sidebar-icon i {
+        color: #ffc107;
+        font-size: 1.5rem;
+    }
+    .sidebar-title {
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: #fff;
+        font-size: 1.3rem;
+        text-align: center;
+    }
+    .sidebar-link, .sidebar-link-group {
+        color: #fff;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        transition: background 0.2s, color 0.2s;
+        text-decoration: none;
+        width: 100%;
+        min-width: 160px;
+        padding: 10px 0;
+    }
+    .sidebar-link:hover, .sidebar-link.active {
+        background: rgba(255,255,255,0.15);
+        color: #ffe066;
+    }
+    .sidebar-link-group {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 0;
+        padding: 0;
+        background: none;
+    }
+    .sub-menu .sidebar-link {
+        font-size: 0.95rem;
+        padding-left: 24px;
+        width: auto;
+        margin-bottom: 4px;
+    }
+    .sidebar-footer {
+        margin-top: 2rem;
+        text-align: center;
+        width: 100%;
+    }
+    .main-content {
+        background: #fff;
+        border-radius: 24px;
+        box-shadow: 0 8px 32px rgba(119, 73, 248, 0.10);
+        margin: 16px 16px 16px 0;
+        padding: 2.5rem 2rem;
+    }
+    .card-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        letter-spacing: 1px;
+        margin-bottom: 1.5rem;
+    }
+    #map {
+        width: 100%;
+        height: 400px;
+        border-radius: 18px;
+        box-shadow: 0 4px 16px rgba(119, 73, 248, 0.08);
+        margin-bottom: 1.5rem;
+    }
+    .form-group label {
+        color: var(--secondary-color);
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+    .form-control {
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    .btn-dark, .btn-success {
+        border-radius: 50px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        box-shadow: 0 5px 15px rgba(119, 73, 248, 0.15);
+        transition: all 0.3s ease;
+    }
+    .btn-dark:hover, .btn-success:hover {
+        background: var(--primary-color);
+        color: #fff;
+    }
+    .mobile-navbar {
+        display: none;
+    }
+    @media (max-width: 992px) {
+        .sidebar {
+            border-radius: 0 0 24px 24px;
+            margin: 0 0 16px 0;
+            min-height: auto;
+            padding: 1.5rem 1rem;
+        }
+        .main-content {
+            border-radius: 24px;
+            margin: 0 0 16px 0;
+            padding: 1.5rem 1rem;
+        }
+    }
+    @media (max-width: 768px) {
+        .sidebar {
+            display: none;
+        }
+        .mobile-navbar {
+            display: block;
+            margin: 1rem 0;
+        }
+    }
+</style>
 @endsection
 
 @section('content')
@@ -16,58 +234,43 @@
     <div class="row flex-nowrap">
         <!-- Sidebar -->
         <div class="col-md-3 col-lg-2 px-0 sidebar">
-            <div class="p-4">
-                <div class="d-flex align-items-center mb-4">
-                    <div class="bg-white rounded-circle p-2">
-                        <i class="fas fa-user text-warning"></i>
+            <div class="sidebar-content d-flex flex-column align-items-center justify-content-center h-100 w-100">
+                <div class="sidebar-header sidebar-animated">
+                    <div class="sidebar-icon">
+                        <i class="fas fa-user"></i>
                     </div>
-                    <a href="{{ route('visitor.dashboard') }}" class="text-decoration-none">
-                        <h4 class="text-white">VISITOR'S DASHBOARD</h4>
-                    </a>
+                    <div class="sidebar-title">VISITOR'S<br>DASHBOARD</div>
                 </div>
-
-                <nav class="mt-4">
-                    <a href="#" class="sidebar-link mb-2">
-                        PROFILE
-                    </a>
-                    <a href="#" class="sidebar-link mb-2">
-                        Account Settings
-                    </a>
-                    <a href="#" class="sidebar-link mb-2">
-                        Campus Map
-                    </a>
-
-                    <div class="mb-2">
-                        <a href="{{ route('appointment.form') }}"><div class="sidebar-link">Appointments</div></a>
-                        <div class="sub-menu">
-                            <a href="{{ route('appointments.approved') }}" class="sidebar-link mb-1">Approved</a>
-                            <a href="{{ route('appointments.rejected') }}" class="sidebar-link mb-1">Rejected</a>
-                            <a href="{{ route('appointments.pending') }}" class="sidebar-link">Pending</a>
-                        </div>
+                <div class="sidebar-animated"><a href="#" class="sidebar-link">PROFILE</a></div>
+                <div class="sidebar-animated"><a href="#" class="sidebar-link">Account Settings</a></div>
+                <div class="sidebar-animated"><a href="#" class="sidebar-link">Campus Map</a></div>
+                <div class="sidebar-animated sidebar-link-group">
+                    <a href="{{ route('appointment.form') }}" class="sidebar-link">Appointments</a>
+                    <div class="sub-menu w-100">
+                        <a href="{{ route('appointments.approved') }}" class="sidebar-link">Approved</a>
+                        <a href="{{ route('appointments.rejected') }}" class="sidebar-link">Rejected</a>
+                        <a href="{{ route('appointments.pending') }}" class="sidebar-link">Pending</a>
                     </div>
-
-                    <a href="{{ route('logout') }}" 
-                       class="sidebar-link mt-5"
+                </div>
+                <div class="sidebar-animated sidebar-footer">
+                    <a href="{{ route('logout') }}" class="sidebar-link"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Log Out
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
-                </nav>
+                </div>
             </div>
         </div>
-
         <!-- Main Content -->
         <div class="col-md-9 col-lg-10 p-4 main-content">
-            <div class="card shadow">
+            <div class="card shadow" style="border-radius: 24px; border: none;">
                 <div class="card-body">
                     <h2 class="card-title mb-4">QUEZON CITY UNIVERSITY MAP</h2>
-
                     <!-- Map Container -->
                     <div class="position-relative mb-4">
                         <div id="map"></div>
-                        
                         <!-- Map Controls -->
                         <div class="position-absolute top-0 end-0 m-3">
                             <button class="btn btn-dark mb-2 d-block w-100" id="qrButton">
@@ -78,7 +281,6 @@
                             </button>
                         </div>
                     </div>
-
                     <!-- Information Grid -->
                     <div class="row g-4">
                         <div class="col-md-6">
