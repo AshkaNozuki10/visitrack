@@ -11,8 +11,14 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GenerateQr;
+<<<<<<< HEAD:routes/web.php
 use App\Models\Appointment;
 use App\Models\QrCode;
+=======
+use App\Models\appointment;
+use App\Http\Controllers\AdminDashboardController;
+use Illuminate\Support\Facades\Auth;
+>>>>>>> 80a41d709e51f932d57a45205a6fc3fa6c9f6be6:Herd/visitrack/routes/web.php
 
 // Public routes
 //Homepage
@@ -50,18 +56,43 @@ Route::get('/db-test', function () {
     return view('database_test');
 }); 
 
+<<<<<<< HEAD:routes/web.php
 Route::get('/admin/dashboard', function () {
     return view('admin_dashboard');
 })->name('admin.dashboard');
 
 Route::get('/visitor/dashboard', [VisitorDashboardController::class, 'index'])
     ->name('visitor.dashboard');
+=======
+// Role-protected routes
+// Admin routes
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin-dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+});
+// Visitor routes
+Route::middleware(['auth', 'visitor'])->group(function () {
+    Route::get('/visitor-dashboard', function () {
+        return view('visitor_dashboard');
+    })->name('visitor.dashboard');
+
+    // Add other visitor routes here
+});
+
+//Test the csrf token
+Route::get('/test-csrf', function() {
+    return csrf_token(); // Should return a token
+});
+
+//Test the qr code
+Route::get('/test-generate-qr', [GenerateQr::class, 'generateQrContent']);
+>>>>>>> 80a41d709e51f932d57a45205a6fc3fa6c9f6be6:Herd/visitrack/routes/web.php
 
 // Temporary testing route - REMOVE BEFORE PRODUCTION
 Route::get('/test-visitor-dashboard', function () {
     return view('visitor_dashboard');
 })->name('test.visitor.dashboard');
 
+<<<<<<< HEAD:routes/web.php
 Route::get('/test-admin-dashboard', function () {
     return view('admin_dashboard');
 })->name('test.admin.dashboard');
@@ -84,6 +115,28 @@ Route::get('/auth-debug', function () {
                 'value' => $user->information->role,
                 'is_admin' => $user->information->role == 'admin',
                 'is_visitor' => $user->information->role == 'visitor',
+=======
+// Debug route
+Route::get('/debug-auth', function () {
+    if (Auth::check()) {
+        $user = Auth::user();
+        try {
+            $info = $user->information;
+            $role = $info ? $info->role : 'No role found';
+            
+            return [
+                'authenticated' => true,
+                'user_id' => $user->credential_id,
+                'has_info' => $info ? true : false,
+                'role' => $role,
+                'redirect_url' => $role === 'admin' ? route('admin.dashboard') : route('visitor.dashboard')
+            ];
+        } catch (\Exception $e) {
+            return [
+                'authenticated' => true, 
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+>>>>>>> 80a41d709e51f932d57a45205a6fc3fa6c9f6be6:Herd/visitrack/routes/web.php
             ];
         }
     }
