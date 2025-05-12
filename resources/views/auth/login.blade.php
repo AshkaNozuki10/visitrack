@@ -138,7 +138,7 @@
 
                         <!-- Form Links -->
                         <div class="form-links d-flex justify-content-between mt-3">
-                            <a href="{{ route('forgotpass') }}" class="btn btn-link" style="color: #0D6EFD; text-decoration: none; padding: 8px 12px; transition: all 0.3s ease;">
+                            <a href="{{ route('forgot.password') }}" class="btn btn-link" style="color: #0D6EFD; text-decoration: none; padding: 8px 12px; transition: all 0.3s ease;">
                                 <i class="fas fa-key me-1"></i> Forgot Password?
                             </a>
                             <a href="{{ route('show.register') }}" class="btn" style="background-color: rgba(119, 73, 248, 0.1); color:#0D6EFD; border-radius: 50px; padding: 8px 16px; transition: all 0.3s ease;">
@@ -155,30 +155,6 @@
     
     @include('partials.footer')
 
-<<<<<<< HEAD:resources/views/auth/login.blade.php
-                       <!-- Login Button -->
-                       <div class="px-5 ms-2">
-                           <button type="submit" class="btn btn-primary fw-bold ms-5" style="background-color: #7749F8;">
-                            Login
-                        </button>
-                       </div>
-                   </form>  
-                   <!-- Forgot Password Link -->
-                   <div class="text-center mt-1 fs-6">
-                       <a href="#" class="text-primary">Forgot Password?</a>
-                   </div>
-
-                   <div class="text-center mt-1 fs-6">
-                       <a href="{{ route('show.register') }}" class="text-primary">Create an account</a>
-                   </div>
-                   
-               </div>
-               <p class="text-center mt-2">Create a peaceful environment.</p>
-           </div>   
-       </div>
-   </div>
-   @include('partials.footer')
-=======
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
@@ -223,7 +199,6 @@
             animateOnScroll();
         });
     </script>
->>>>>>> 6e30a1d51f314c99c4e42fd3a8bfdc8657652a4c:Herd/visitrack/resources/views/auth/login.blade.php
 </body>
 
 </html>
