@@ -113,22 +113,9 @@
                             @enderror
                         </div>
 
-                        <!-- Role -->
+                        <!-- Hidden Role -->
                         <div class="form-group">
-                            <label>Role: <span class="required">*</span></label>
-                            <div class="radio-group">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="visitor" name="role" value="visitor" {{ old('role') == 'visitor' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="visitor">Visitor</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="admin" name="role" value="admin" {{ old('role') == 'admin' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="admin">Admin</label>
-                                </div>
-                                @error('role')
-                                    <div class="invalid-feedback d-block">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            <input type="hidden" name="role" value="visitor">
                         </div>
                     </div>
                 </div>
@@ -189,8 +176,8 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="email">Email: <span class="required">*</span></label>
-                            <input type="email" class="form-control @error('username') is-invalid @enderror" id="username" name="username" value="{{ old('username') }}" required>
-                            @error('username')
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required>
+                            @error('email')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
