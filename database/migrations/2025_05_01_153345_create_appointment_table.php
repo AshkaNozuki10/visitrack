@@ -27,6 +27,8 @@ return new class extends Migration
             $table->time('entry_time');
             $table->time('exit_time');
             $table->unsignedBigInteger('location');
+
+            $table->timestamps();
         });
 
         Schema::create('qr_code', function (Blueprint $table){
@@ -34,6 +36,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('qr_text');
             $table->binary('qr_image');
+
+            $table->timestamps();
         });
 
         // Then create dependent tables
@@ -45,6 +49,7 @@ return new class extends Migration
             $table->time('appointment_time');
             $table->integer('approval')->nullable();
             $table->unsignedBigInteger('qr_code')->nullable();
+            
             $table->timestamps();
 
         // Add foreign keys after all tables exist
