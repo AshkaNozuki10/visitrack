@@ -13,7 +13,7 @@ class VisitorDashboardController extends Controller
     {
         $user = Auth::user();
         if (!$user) {
-            return redirect()->route('login');
+            return redirect()->route('show.login');
         }
         $appointment = Appointment::where('user_id', $user->user_id)
             ->orderByDesc('created_at')
