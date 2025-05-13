@@ -45,6 +45,24 @@ return new class extends Migration
             $table->id('appointment_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('visit_id'); // Changed from integer
+            $table->enum('type', ['Walk In', 'Appointment']);
+            $table->text('transaction_type');
+            $table->text('purpose_of_visit');
+            $table->enum('department_type', ['CCS Department', 
+                                        'Education Department', 
+                                        'Accounting Department',
+                                        'Entrepreneurship Department', 
+                                        'Engineering Department']);
+            $table->enum('building', ['Gymnasium',
+                                    'Administration Building',
+                                    'QCU Urban Farm Zone',
+                                    'Korphil Building',
+                                    'CHED Building',
+                                    'QCU Entrep Zone',
+                                    'Belmonte Building',
+                                    'New Academiz Building',
+                                    'Quarantine Zone',
+                                    'Auditorium Building']);
             $table->date('appointment_date');
             $table->time('appointment_time');
             $table->integer('approval')->nullable();
