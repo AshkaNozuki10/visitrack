@@ -52,7 +52,7 @@
                 </div>
             @endif
 
-            <form id="registration_form" action="{{ route('auth.registration') }}" method="POST">
+            <form id="registration_form" action="{{ route('auth.register') }}" method="POST">
                 @csrf
                 <!-- Personal Information Section -->
                 <div class="form-section">
@@ -212,7 +212,7 @@
                 </div>
 
                 <div class="form-buttons">
-                    <a href="{{ route('login') }}" class="btn btn-secondary">Cancel</a>
+                    <a href="{{ route('show.login') }}" class="btn btn-secondary">Cancel</a>
                     <button type="submit" class="btn btn-primary">Register</button>
                 </div>
 

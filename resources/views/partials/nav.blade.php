@@ -12,8 +12,8 @@
 
                 <!-- Login and Sign Up -->
                 <div class="d-flex border border-white p-1 rounded-pill" style="margin-right: 3rem;">
-                    <a href="/login" class="btn text-white fw-bold fs-6">Login</a>
-                    <a href="/register" class="btn btn-light signup_btn rounded-pill fw-bold fs-6">Sign Up</a>
+                    <a href="{{ route('show.login') }}" class="btn text-white fw-bold fs-6">Login</a>
+                    <a href="{{ route('show.register') }}" class="btn btn-light signup_btn rounded-pill fw-bold fs-6">Sign Up</a>
                 </div>
             </div>
         @endif
