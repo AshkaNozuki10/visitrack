@@ -19,6 +19,10 @@ class AppointmentController extends Controller
         $this->qrGenerator = $qrGenerator;
     }
 
+    public function showAppointmentForm(){
+        return view('appointments.form');
+    }
+
     public function approve(Appointment $appointment)
     {
         // Update appointment status to approved
@@ -46,6 +50,11 @@ class AppointmentController extends Controller
     {
         // Validate the request data
         $validated = $request->validate([
+            'type' => 'required|in:Walk In,Appointment',
+            'transaction_type' => 'required|string',
+            'purpose' => 'required|string',
+            'department' => 'required|in:CCS Department,Education Department,Accounting Department,Entrepreneurship Department,Engineering Department',
+            'building' => 'required|in:Gymnasium,Administration Building,QCU Urban Farm Zone,Korphil Building,CHED Building,QCU Entrep Zone,Belmonte Building,New Academiz Building,Quarantine Zone,Auditorium Building',
             'appointment_date' => 'required|date|after:today',
             'appointment_time' => 'required'
         ]);
@@ -67,6 +76,11 @@ class AppointmentController extends Controller
             $appointment = new Appointment();
             $appointment->user_id = Auth::id();
             $appointment->visit_id = $visit->visit_id;
+            $appointment->type = $request->type;
+            $appointment->transaction_type = $request->transaction_type;
+            $appointment->purpose = $request->purpose;
+            $appointment->department = $request->department;
+            $appointment->building = $request->building;
             $appointment->appointment_date = $request->appointment_date;
             $appointment->appointment_time = $request->appointment_time;
             $appointment->approval = null; // Will be set when approved/rejected
@@ -74,7 +88,7 @@ class AppointmentController extends Controller
             
             DB::commit();
             
-            return redirect()->route('appointments.pending')
+            return redirect()->route('show.pending.appointments')
                 ->with('success', 'Appointment scheduled successfully! Your request is pending approval.');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -127,5 +141,31 @@ class AppointmentController extends Controller
             ->get();
             
         return view('appointments.rejected', compact('appointments'));
+    }
+
+    // Get approved appointments
+    public function showApprovedAppointments()
+    {
+        $appointments = Appointment::where('user_id', Auth::id())
+            ->where('approval', 1)
+            ->with(['visit.location', 'qrCode'])
+            ->orderBy('appointment_date')
+            ->orderBy('appointment_time')
+            ->get();
+            
+        return view('appointments.approved', compact('appointments'));
+    }
+
+    public function printAppointments(){
+        // Get the user's approved appointments
+        $appointments = Appointment::where('user_id', Auth::id())
+            ->where('approval', 1)
+            ->with(['visit.location', 'qrCode'])
+            ->orderBy('appointment_date')
+            ->orderBy('appointment_time')
+            ->get();
+            
+        // Return a printer-friendly view
+        return view('appointments.print', compact('appointments'));
     }
 }
