@@ -1,0 +1,14 @@
+/* Base styles */
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+/* For debugging - this will be removed/replaced by your actual styles */
+.page-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
