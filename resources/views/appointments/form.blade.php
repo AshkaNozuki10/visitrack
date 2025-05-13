@@ -68,7 +68,7 @@
                     <!-- Map Container -->
                     <div class="position-relative mb-4">
                     </div>
-                    <form action="{{ route('appointment.form') }}" method="POST">
+                    <form action="{{ route('appointment.store') }}" method="POST">
                         @csrf
                         
                         <!-- Transaction Type -->

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Credential;
-use App\Models\User;
+use App\Models\Information;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -20,19 +20,22 @@ class RegisteredUserController extends Controller
     public function register(Request $request){
         Log::info('Registration attempt started', ['request' => $request->all()]);
         
+        // Force role to be visitor
+        $request->merge(['role' => 'visitor']);
+        
         $validated = $request->validate([
             'last_name' => 'required|string|max:55',
             'first_name' => 'required|string|max:55',
             'middle_name' => 'nullable|string|max:55',
             'sex' => 'required|in:male,female',
             'birthdate' => 'required|date|before:today',
-            'role' => 'required|in:admin,visitor',
+            'role' => 'required|in:visitor', // Only allow visitor role
             'street_no' => 'required|string|max:20',
             'street_name' => 'required|string|max:100',
             'barangay' => 'required|string|max:100',
             'district' => 'required|string|max:100',
             'city' => 'required|string|max:100',
-            'username' => 'required|email|unique:credential,username',
+            'email' => 'required|email|unique:credential,email',
             'password' => 'required|min:8|confirmed',
         ]);
 
@@ -40,7 +43,7 @@ class RegisteredUserController extends Controller
 
         try {
             // First create user information
-            $user = User::create([
+            $information = Information::create([
                 'last_name' => $validated['last_name'],
                 'first_name' => $validated['first_name'],
                 'middle_name' => $validated['middle_name'],
@@ -51,14 +54,15 @@ class RegisteredUserController extends Controller
 
             // Create credential with the correct user_id
             $credential = Credential::create([
-                'user_id' => $user->user_id,
-                'username' => $validated['username'],
+                'user_id' => $information->user_id,
+                'username' => $validated['email'],
+                'email' => $validated['email'],
                 'password' => Hash::make($validated['password']),
             ]);
 
             // Create address with the correct user_id
             Address::create([
-                'user_id' => $user->user_id,
+                'user_id' => $information->user_id,
                 'street_no' => $validated['street_no'],
                 'street_name' => $validated['street_name'],
                 'barangay' => $validated['barangay'],
@@ -67,7 +71,7 @@ class RegisteredUserController extends Controller
             ]);
 
             DB::commit();
-            Log::info('Registration successful', ['user_id' => $user->user_id]);
+            Log::info('Registration successful', ['user_id' => $information->user_id]);
 
             return redirect()
                 ->route('show.login')

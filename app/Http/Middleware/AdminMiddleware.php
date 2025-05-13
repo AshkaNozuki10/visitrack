@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Enums\RoleEnum;
 
 class AdminMiddleware
 {
@@ -17,14 +18,14 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-       Log::info('Admin middleware check', [
+        Log::info('Admin middleware check', [
             'authenticated' => Auth::check(),
             'user_id' => Auth::check() ? Auth::id() : null
         ]);
 
         if(Auth::check()){
             $user = Auth::user();
-            $role = $user->user ? $user->user->role : 'no role';
+            $role = $user->information ? $user->information->role : 'no role';
             Log::info('User role check', ['role' => $role]);
 
             if($role === 'admin') {

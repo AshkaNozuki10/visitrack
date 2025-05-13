@@ -50,11 +50,19 @@ class AppointmentController extends Controller
     {
         // Validate the request data
         $validated = $request->validate([
+<<<<<<< HEAD
             'type' => 'required|in:Walk In,Appointment',
             'transaction_type' => 'required|string',
             'purpose' => 'required|string',
             'department' => 'required|in:CCS Department,Education Department,Accounting Department,Entrepreneurship Department,Engineering Department',
             'building' => 'required|in:Gymnasium,Administration Building,QCU Urban Farm Zone,Korphil Building,CHED Building,QCU Entrep Zone,Belmonte Building,New Academiz Building,Quarantine Zone,Auditorium Building',
+=======
+            'appointment_type' => 'required',
+            'entity' => 'required',
+            'purpose' => 'required',
+            'department' => 'required',
+            'building' => 'required',
+>>>>>>> aada54ad073618f04c840f0f888dcfc4f0c7c88e
             'appointment_date' => 'required|date|after:today',
             'appointment_time' => 'required'
         ]);
@@ -68,16 +76,21 @@ class AppointmentController extends Controller
             $visit->user_id = Auth::id();
             $visit->visit_date = $request->appointment_date;
             $visit->entry_time = $request->appointment_time;
-            $visit->exit_time = null; // Will be filled when user leaves
-            $visit->location = 1; // Default location, will be updated during actual visit
+            $visit->exit_time = $request->appointment_time; // Set to entry_time initially
+            $visit->location = 1; // Default to Administration Building (location_id 1)
             $visit->save();
             
             // Create the appointment with the placeholder visit_id
             $appointment = new Appointment();
             $appointment->user_id = Auth::id();
             $appointment->visit_id = $visit->visit_id;
+<<<<<<< HEAD
             $appointment->type = $request->type;
             $appointment->transaction_type = $request->transaction_type;
+=======
+            $appointment->appointment_type = $request->appointment_type;
+            $appointment->entity = $request->entity;
+>>>>>>> aada54ad073618f04c840f0f888dcfc4f0c7c88e
             $appointment->purpose = $request->purpose;
             $appointment->department = $request->department;
             $appointment->building = $request->building;
@@ -143,6 +156,7 @@ class AppointmentController extends Controller
         return view('appointments.rejected', compact('appointments'));
     }
 
+<<<<<<< HEAD
     // Get approved appointments
     public function showApprovedAppointments()
     {
@@ -169,3 +183,23 @@ class AppointmentController extends Controller
         return view('appointments.print', compact('appointments'));
     }
 }
+=======
+    public function show(Appointment $appointment)
+    {
+        // Ensure the user can only view their own appointments
+        if ($appointment->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        return view('appointments.show', compact('appointment'));
+    }
+
+    public function reject(Appointment $appointment)
+    {
+        $appointment->update([
+            'approval' => 0
+        ]);
+        return redirect()->back()->with('success', 'Appointment has been denied.');
+    }
+}
+>>>>>>> aada54ad073618f04c840f0f888dcfc4f0c7c88e

@@ -3,34 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Visit;
+use Illuminate\Support\Facades\DB;
 
 class AdminDashboardController extends Controller
 {
-   public function dashboard()
-{
-    // Example: Fetch records from your model
-    $records = Visit::with('user')
-        ->orderByDesc('created_at')
-        ->get()
-        ->map(function ($visitor){
-            return [
-                'user_id'        => $visitor->user->user_id,
-                'entry_time'        => $visitor->entry_time,
-                'exit_time'         => $visitor->exit_time,
-                'building_name'     => $visitor->building_name,
-                'latitude'          => $visitor->latitude,
-                'longitude'         => $visitor->longitude,
-                'duration_minutes'  => $visitor->duration_minutes,
-            ];
-        });
+    public function index()
+    {
+        // Get all records from the tracking log
+        $records = DB::table('student_tracking_log')
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-        // For map markers, you might want only currently active visitors
-        $activeStudents = $records->whereNull('exit_time')->values();
+        // Filter active students (those without exit time)
+        $activeStudents = $records->filter(function ($record) {
+            return empty($record->exit_time);
+        })->values();
 
-        return view('admin_dashboard', [
+        return view('admin.admin_dashboard', [
             'records' => $records,
-            'activeStudents' => $activeStudents,
+            'activeStudents' => $activeStudents
         ]);
     }
-}
+
+    public function pendingAppointmentsForAdmin()
+    {
+        $appointments = \App\Models\Appointment::whereNull('approval')->with(['visit', 'user'])->orderBy('created_at', 'desc')->get();
+        return view('admin.adminpending', compact('appointments'));
+    }
+} 

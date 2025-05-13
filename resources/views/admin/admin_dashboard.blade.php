@@ -168,7 +168,11 @@
                                 </a>
                             </div>
                             <div class="col-md-3">
+<<<<<<< HEAD
                                 <a href="#" class="quick-action-item card p-3 text-center shadow-sm border-0 animate__animated animate__pulse" style="background: #06b6d4; color: white;">
+=======
+                                <a href="{{ route('admin.settings') }}" class="quick-action-item card p-3 text-center shadow-sm border-0 animate__animated animate__pulse" style="background: #06b6d4; color: white;">
+>>>>>>> aada54ad073618f04c840f0f888dcfc4f0c7c88e
                                     <div class="quick-action-icon mb-2">
                                         <i class="fas fa-cog fa-2x"></i>
                                     </div>
