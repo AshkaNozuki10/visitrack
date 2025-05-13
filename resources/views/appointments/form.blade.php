@@ -25,16 +25,16 @@
                     <a href="#" class="sidebar-link mb-2">
                         Account Settings
                     </a>
-                    <a href="#" class="sidebar-link mb-2">
+                    <a href="{{ route('visitor.dashboard') }}" class="sidebar-link mb-2">
                         Campus Map
                     </a>
 
                     <div class="mb-2">
                         <a href="{{ route('appointment.form') }}"><div class="sidebar-link">Appointments</div></a>
                         <div class="sub-menu">
-                            <a href="{{ route('appointments.approved') }}" class="sidebar-link mb-1">Approved</a>
-                            <a href="{{ route('appointments.rejected') }}" class="sidebar-link mb-1">Rejected</a>
-                            <a href="{{ route('appointments.pending') }}" class="sidebar-link">Pending</a>
+                            <a href="{{ route('show.approved.appointments') }}" class="sidebar-link mb-1">Approved</a>
+                            <a href="{{ route('show.rejected.appointments') }}" class="sidebar-link mb-1">Rejected</a>
+                            <a href="{{ route('show.pending.appointments') }}" class="sidebar-link">Pending</a>
                         </div>
                     </div>
 
