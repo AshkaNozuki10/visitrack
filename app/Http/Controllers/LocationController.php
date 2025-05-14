@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\information;
+use App\Models\User;
 use App\Notifications\GpsStatusNotification;
 use Illuminate\Http\Request;
 
 class LocationController extends Controller{
 
     //Toggle the user's
-    public function toggleLocationTracking(information $user, bool $status){
+    public function toggleLocationTracking(User $user, bool $status){
         $user->update([
             'location_tracking_enabled' => $status,
             'last_location_updated_at' => $status ? now() : null
@@ -21,7 +21,7 @@ class LocationController extends Controller{
     }
 
     //Updates the user's location
-    public function updateUserLocation(information $user, float $latitude, float $longitude): void{
+    public function updateUserLocation(user $user, float $latitude, float $longitude): void{
         if(!$user->location_tracking_enabled){
             return;
         }
@@ -35,7 +35,7 @@ class LocationController extends Controller{
         $this->checkCampusZone($user, $latitude, $longitude);
     }
 
-    public function checkCampusZone(information $user, float $lat, float $lng): bool
+    public function checkCampusZone(User $user, float $lat, float $lng): bool
     {   
         // Define your campus boundaries (example coordinates)
         $campusBoundary = [
@@ -70,7 +70,7 @@ class LocationController extends Controller{
         return $isWithinCampus;
     }
 
-    protected function triggerSafetyAlert(information $user): void
+    protected function triggerSafetyAlert(User $user): void
     {
         // Alert implementation
     }
@@ -93,7 +93,7 @@ class LocationController extends Controller{
         return $inside;
     }
 
-    public function sendTrackingStatusNotification(information $user){
+    public function sendTrackingStatusNotification(User $user){
         $notification = "Your location is off, please turn on your GPS.";
     }
 
