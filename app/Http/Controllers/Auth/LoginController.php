@@ -2,18 +2,36 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
-class LoginController extends Controller
+class LoginController extends BaseController
 {
+    use AuthorizesRequests, ValidatesRequests;
+    /**
+     * The middleware defined for this controller.
+     *
+     * @var array
+     */
+    public function __construct()
+    {
+        $this->middleware('throttle:3,5')->only(['authenticateUser', 'showLogin']);
+    }
     /**
      * Handle the login request
      */
-    public function authenticateUser(Request $request)
+    public function showLogin(): View{
+        return view ('auth.login');
+    }
+
+    public function authenticateUser(Request $request): RedirectResponse
     {
         Log::info('Login attempt started', [
             'username' => $request->username,
@@ -40,14 +58,21 @@ class LoginController extends Controller
             // Regenerate session
             $request->session()->regenerate();
             
-            Log::info('Authentication successful', [
+             Log::info('Authentication successful', [
+                'session_id' => session()->getId(),
                 'user_id' => $user->credential_id,
-                'has_info' => $user->information ? true : false,
-                'role' => $user->information ? $user->information->role : 'no role',
+                'auth_id' => Auth::id(),
+                'session_data' => session()->all()
+            ]);
+
+            Log::info('User authenticated', [
+                'user_id' => $user->credential_id,
+                'has_info' => $user->user ? true : false,
+                'role' => $user->user ? $user->role : 'no role',
                 'session_id' => session()->getId()
             ]);
 
-            if ($user->information && $user->information->role === 'admin') {
+            if ($user->user && $user->user->role === 'admin') {
                 Log::info('Redirecting to admin dashboard');
                 return redirect()->route('admin.dashboard');
             } else {
@@ -70,7 +95,7 @@ class LoginController extends Controller
     /**
      * Log the user out
      */
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse
     {
         Log::info('Logout attempt', [
             'user_id' => Auth::id(),
@@ -82,5 +107,9 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function username(){
+        return 'username';
     }
 }
