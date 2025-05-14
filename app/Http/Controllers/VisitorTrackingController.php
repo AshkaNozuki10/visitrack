@@ -8,6 +8,6 @@ class VisitorTrackingController extends Controller
 {
     public function index()
     {
-        return view('visitor-tracking');
+        return view('');
     }
 } 
