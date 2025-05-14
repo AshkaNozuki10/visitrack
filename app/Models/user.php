@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->role === 'visitor';
     }
+
+    public function isGuard()
+    {
+        return $this->role === 'guard';
+    }
 }
