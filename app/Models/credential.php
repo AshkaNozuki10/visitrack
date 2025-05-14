@@ -15,7 +15,7 @@ class Credential extends Authenticatable
     public $timestamps = true;
 
     public function information(){
-        return $this->belongsTo(Information::class, 'user_id', 'user_id')->withDefault([
+        return $this->belongsTo(User::class, 'user_id', 'user_id')->withDefault([
             'role' => 'visitor' // Default role if relationship fails
         ]);
     }
