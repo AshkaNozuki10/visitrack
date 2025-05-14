@@ -2,7 +2,66 @@
 
 @section('styles')
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<<<<<<< HEAD
 <link rel="stylesheet" href="{{ asset('css/appointment.css') }}">
+=======
+<link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
+<style>
+    :root {
+        --primary-color: #7749F8;
+        --secondary-color: #5a36c9;
+        --bg-color: #f5f7ff;
+        --text-color: #333;
+        --light-color: #ffffff;
+        --accent-color: #4a89dc;
+    }
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #6b8cce, #7749F8);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        color: var(--text-color);
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+    @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    .main-content {
+        background: #fff;
+        border-radius: 24px;
+        box-shadow: 0 8px 32px rgba(119, 73, 248, 0.10);
+        margin: 0 0 16px 0;
+        padding: 2.5rem 2rem;
+    }
+    .card-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        letter-spacing: 1px;
+        margin-bottom: 1.5rem;
+    }
+    .form-label {
+        color: var(--secondary-color);
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+    .form-control {
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    .submit-btn {
+        font-weight:600;
+        border-radius:12px;
+        background: linear-gradient(90deg, #7749F8 0%, #4a89dc 100%);
+        border:none;
+    }
+</style>
+>>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
 @endsection
 
 @section('content')
@@ -19,6 +78,7 @@
                 </div>
 
                 <nav class="mt-4">
+<<<<<<< HEAD
                     <a href="#" class="sidebar-link mb-2">
                         PROFILE
                     </a>
@@ -46,12 +106,31 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
+=======
+                    <a href="#" class="sidebar-link mb-2">PROFILE</a>
+                    <a href="#" class="sidebar-link mb-2">Account Settings</a>
+                    <a href="#" class="sidebar-link mb-2">Campus Map</a>
+                    <div class="mb-2">
+                        <a href="{{ route('appointment.form') }}" class="sidebar-link active">Appointments</a>
+                        <div class="sub-menu">
+                            <a href="{{ route('appointments.approved') }}" class="sidebar-link mb-1">Approved</a>
+                            <a href="{{ route('appointments.rejected') }}" class="sidebar-link mb-1">Rejected</a>
+                            <a href="{{ route('appointments.pending') }}" class="sidebar-link">Pending</a>
+                        </div>
+                    </div>
+                    <a href="{{ route('logout') }}" class="sidebar-link mt-5" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
+>>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
                 </nav>
             </div>
         </div>
 
         <!-- Main Content -->
+<<<<<<< HEAD
         <div class="col-md-9 col-lg-10 p-4">
+=======
+        <div class="col-md-9 col-lg-10 p-4 main-content">
+>>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
             <div class="card shadow">
                 <div class="card-body">
                     <h2 class="card-title mb-4">VISITOR'S APPOINTMENT FORM</h2>
@@ -190,7 +269,11 @@
                             </div>
                         </div>
 
+<<<<<<< HEAD
                         <button type="submit" class="submit-btn">Submit</button>
+=======
+                        <button type="submit" class="submit-btn btn btn-primary w-100 py-2 mt-3" style="font-weight:600; border-radius:12px; background: linear-gradient(90deg, #7749F8 0%, #4a89dc 100%); border:none;">Submit</button>
+>>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
                     </form>
                 </div>
             </div>

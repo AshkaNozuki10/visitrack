@@ -16,10 +16,6 @@ class Authenticate
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! $request->expectsJson()) {
-            return redirect()->route('show.login');
-        }
-
         if (!Auth::check()) {
             return redirect()->route('login')->with('status', 'Please login to access this page');
         }

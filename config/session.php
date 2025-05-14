@@ -215,4 +215,7 @@ return [
     'partitioned' => env('SESSION_PARTITIONED_COOKIE', false),
 
 ];
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789

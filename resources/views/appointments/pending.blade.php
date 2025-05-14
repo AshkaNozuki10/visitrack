@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
 @extends('layouts.app')
 
 @section('styles')
@@ -19,6 +22,7 @@
                 </div>
 
                 <nav class="mt-4">
+<<<<<<< HEAD
                     <!-- Your sidebar navigation (same as other views) -->
                     <a href="#" class="sidebar-link mb-2">PROFILE</a>
                     <a href="#" class="sidebar-link mb-2">Account Settings</a>
@@ -134,6 +138,8 @@
 
                 <nav class="mt-4">
                     <!-- Your sidebar navigation (same as other views) -->
+=======
+>>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
                     <a href="#" class="sidebar-link mb-2">PROFILE</a>
                     <a href="#" class="sidebar-link mb-2">Account Settings</a>
                     <a href="#" class="sidebar-link mb-2">Campus Map</a>
@@ -143,7 +149,11 @@
                         <div class="sub-menu">
                             <a href="{{ route('appointments.approved') }}" class="sidebar-link mb-1">Approved</a>
                             <a href="{{ route('appointments.rejected') }}" class="sidebar-link mb-1">Rejected</a>
+<<<<<<< HEAD
                             <a href="{{ route('appointments.pending') }}" class="sidebar-link active">Pending</a>
+=======
+                            <a href="{{ route('appointments.pending') }}" class="sidebar-link mb-1 active">Pending</a>
+>>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
                         </div>
                     </div>
 
@@ -173,7 +183,11 @@
 
                     @if(session('error'))
                         <div class="alert alert-danger">
+<<<<<<< HEAD
                             {{ session('success') }}
+=======
+                            {{ session('error') }}
+>>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
                         </div>
                     @endif
 
@@ -226,4 +240,7 @@
     </div>
 </div>
 @endsection
+<<<<<<< HEAD
 >>>>>>> aada54ad073618f04c840f0f888dcfc4f0c7c88e
+=======
+>>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789

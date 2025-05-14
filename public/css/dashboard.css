@@ -31,7 +31,11 @@
 
 /* Sidebar styles */
 .sidebar {
+<<<<<<< HEAD
     background: linear-gradient(to bottom, #1648cf, #0a17c9);
+=======
+    background: linear-gradient(to bottom, #B45309, #D97706);
+>>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
     min-height: 100vh;
     position: sticky;
     top: 0;

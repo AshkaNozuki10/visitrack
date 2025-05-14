@@ -114,6 +114,9 @@ return [
     'password_timeout' => 10800,
 
 ];
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789

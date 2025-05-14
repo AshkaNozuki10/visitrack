@@ -12,11 +12,6 @@ class Appointment extends Model
     protected $fillable = [
         'user_id',
         'visit_id',
-        'type',
-        'transaction_type',
-        'purpose_of_visit',
-        'department_type',
-        'building',
         'appointment_date',
         'appointment_time',
         'approval',
@@ -36,11 +31,12 @@ class Appointment extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Information::class, 'user_id');
     }
 
     public function is_approved($excludeStatuses = [])
     {
-        return $this->status === 'approved' && !in_array($this->status, $excludeStatuses);
+        // Use approval field: 1 = approved, 0 = rejected, null = pending
+        return $this->approval === 1 && !in_array($this->approval, $excludeStatuses);
     }
 }

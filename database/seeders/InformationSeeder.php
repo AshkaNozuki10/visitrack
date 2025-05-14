@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\User;
+use App\Models\information;
 
 class InformationSeeder extends Seeder
 {
@@ -13,7 +13,7 @@ class InformationSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        information::create([
             'user_id' => 1,
             'last_name' => 'Doe',
             'first_name' => 'John',

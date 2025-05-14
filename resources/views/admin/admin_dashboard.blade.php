@@ -169,10 +169,14 @@
                             </div>
                             <div class="col-md-3">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                 <a href="#" class="quick-action-item card p-3 text-center shadow-sm border-0 animate__animated animate__pulse" style="background: #06b6d4; color: white;">
 =======
                                 <a href="{{ route('admin.settings') }}" class="quick-action-item card p-3 text-center shadow-sm border-0 animate__animated animate__pulse" style="background: #06b6d4; color: white;">
 >>>>>>> aada54ad073618f04c840f0f888dcfc4f0c7c88e
+=======
+                                <a href="{{ route('admin.settings') }}" class="quick-action-item card p-3 text-center shadow-sm border-0 animate__animated animate__pulse" style="background: #06b6d4; color: white;">
+>>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
                                     <div class="quick-action-icon mb-2">
                                         <i class="fas fa-cog fa-2x"></i>
                                     </div>
@@ -182,6 +186,48 @@
                         </div>
                     </div>
                 </div>
+<<<<<<< HEAD
+=======
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <h2 class="mb-4">Active Visitors Map</h2>
+                        <div id="visitor-map" style="height: 400px; width: 100%;"></div>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <h3>All Visitor Records</h3>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>User ID</th>
+                                        <th>Entry Time</th>
+                                        <th>Exit Time</th>
+                                        <th>Building</th>
+                                        <th>Latitude</th>
+                                        <th>Longitude</th>
+                                        <th>Duration (min)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($records as $record)
+                                    <tr>
+                                        <td>{{ $record['user_id'] }}</td>
+                                        <td>{{ $record['entry_time'] }}</td>
+                                        <td>{{ $record['exit_time'] }}</td>
+                                        <td>{{ $record['building_name'] }}</td>
+                                        <td>{{ $record['latitude'] }}</td>
+                                        <td>{{ $record['longitude'] }}</td>
+                                        <td>{{ $record['duration_minutes'] }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+>>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
             </div>
         </div>
     </div>
@@ -219,4 +265,34 @@
     .main-content {
         margin-top: 2rem !important;
     }
+<<<<<<< HEAD
 </style>
+=======
+</style>
+
+@section('styles')
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+@endsection
+
+@push('scripts')
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var map = L.map('visitor-map').setView([14.6760, 121.0437], 15); // Default to QC
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    var activeStudents = @json($activeStudents);
+    activeStudents.forEach(function(visitor) {
+        if(visitor.latitude && visitor.longitude) {
+            L.marker([visitor.latitude, visitor.longitude])
+                .addTo(map)
+                .bindPopup('User ID: ' + visitor.user_id + '<br>Building: ' + visitor.building_name);
+        }
+    });
+});
+</script>
+@endpush
+>>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789

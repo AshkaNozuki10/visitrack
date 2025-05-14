@@ -11,9 +11,9 @@ class Address extends Model
     public $incrementing = true;
     public $timestamps = true;
 
-    public function user()
+    public function information()
     {
-        return $this->belongsTo(User::class, 'user_id', 'user_id');
+        return $this->belongsTo(Information::class, 'user_id', 'user_id');
     }
 
     protected $fillable = [

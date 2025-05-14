@@ -12,12 +12,13 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        \App\Http\Middleware\TrustProxies::class,
-        \Illuminate\Http\Middleware\HandleCors::class,
-        \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
-        \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
-        \App\Http\Middleware\TrimStrings::class,
-        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        // \App\Http\Middleware\TrustHosts::class,
+        // \App\Http\Middleware\TrustProxies::class,
+        // \Illuminate\Http\Middleware\HandleCors::class,
+        // \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
+        // \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
+        // \App\Http\Middleware\TrimStrings::class,
+        // \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
 
     /**
@@ -27,29 +28,29 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            \App\Http\Middleware\EncryptCookies::class,
-            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
-            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \App\Http\Middleware\VerifyCsrfToken::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            // \App\Http\Middleware\EncryptCookies::class,
+            // \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            // \Illuminate\Session\Middleware\StartSession::class,
+            // \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            // \App\Http\Middleware\VerifyCsrfToken::class,
+            // \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\PreventBackHistory::class, // Prevent browser back after logout
         ],
 
         'api' => [
-            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            // 'throttle:api',
+            // \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
 
     /**
-     * The application's middleware aliases.
+     * The application's route middleware.
      *
      * @var array
      */
-    protected $middlewareAliases = [
+    protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
@@ -57,8 +58,9 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'visitor' => \App\Http\Middleware\VisitorMiddleware::class,
+        // Add your custom middleware here
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
-        'guard' => \App\Http\Middleware\GuardMiddleware::class,
+        'visitor' => \App\Http\Middleware\VisitorMiddleware::class,
+        'down' => \App\Http\Middleware\DownForMaintenance::class,
     ];
 }

@@ -9,11 +9,6 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GenerateQr;
 use App\Models\appointment;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\SecurityGuardController;
-use App\Http\Controllers\QrScannerController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\AdminDashboardController;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,20 +18,21 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-// Authentication routes
-Route::get('/login', [LoginController::class, 'showLogin'])->name('show.login');
-Route::post('/login', [LoginController::class, 'authenticateUser'])->name('auth.login');
-Route::get('/register', [RegisteredUserController::class, 'showRegistrationForm'])->name('show.register');
-Route::post('/register', [RegisteredUserController::class, 'register'])->name('auth.register');
+//Login Page
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login'); // Changed from 'show.login' to 'login'
 
-//Forgot Password Page
-Route::get('/forgot-password', function () {
-    return view('auth.forgot_password');
-})->name('forgot.password');
+//Registration Page
+Route::get('/register', [RegisteredUserController::class, 'showRegistrationForm'])->name('show.register');
+
+//Post method for login and registration
+Route::post('/login', [LoginController::class, 'authenticateUser'])->middleware('throttle:120,1')->name('auth.login');
+Route::post('/register', [RegisteredUserController::class, 'register'])->name('auth.registration');
 
 //Forgot Password Page
 Route::get('/forgotpass', function () {
-    return view('auth.forgot_password');
+    return view('auth.forgotpass');
 })->name('forgotpass');
 
 //Verification Page
@@ -49,8 +45,8 @@ Route::get('/reset-password', function () {
     return view('auth.reset-password');
 })->name('reset-password');
 
-//Testing the post method
-Route::get('test-register', [RegisteredUserController::class, 'testRegister'])->name('test.register');
+//Logout
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 //Testing the post method
 Route::get('test-register', [RegisteredUserController::class, 'testRegister'])->name('test.register');
@@ -61,63 +57,30 @@ Route::get('/db-test', function () {
 }); 
 
 // Role-protected routes
-// Admin Routes
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/admin-dashboard', function () {
-        return view('admin.admin_dashboard');
-    })->name('admin.dashboard');
-
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('/visitors', [AdminController::class, 'visitors'])->name('admin.visitors');
-    Route::get('/reports', [AdminController::class, 'reports'])->name('admin.reports');
-    Route::get('/blacklist', [AdminController::class, 'blacklist'])->name('admin.blacklist');
-    Route::post('/blacklist/{information}', [AdminController::class, 'addToBlacklist'])->name('admin.blacklist.add');
-    Route::delete('/blacklist/{information}', [AdminController::class, 'removeFromBlacklist'])->name('admin.blacklist.remove');
-    Route::post('/visits/{visit}/checkout', [AdminController::class, 'checkOut'])->name('admin.visits.checkout');
+// Admin routes
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('admin/admin-dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 });
-
 // Visitor routes
 Route::middleware(['auth', 'visitor'])->group(function () {
-    Route::get('/visitor/dashboard', function () {
-        return view('visitor.visitor_dashboard');
+    Route::get('/visitor-dashboard', function () {
+        return view('visitor_dashboard');
     })->name('visitor.dashboard');
-    
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-    
-    // Location tracking routes
-    Route::post('/location/update', [LocationController::class, 'updateLocationFromFrontend'])->name('location.update');
-    Route::get('/location/check', [LocationController::class, 'checkLocationStatus'])->name('location.check');
-    
-    // Appointment routes
-    // Appointment form route
-    Route::get('/appointments/form', [AppointmentController::class, 'showAppointmentForm'])->name('appointment.form');
-    Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
-    Route::get('/appointments/print', [AppointmentController::class, 'printAppointments'])->name('print.appointments');
 
-    //Approved, Rejected and Pending Appointments
-    Route::get('/appointments/approved', [AppointmentController::class, 'showApprovedAppointments'])->name('show.approved.appointments');
-    Route::get('/appointments/rejected', [AppointmentController::class, 'showRejectedAppointments'])->name('show.rejected.appointments');
-    Route::get('/appointments/pending', [AppointmentController::class, 'showPendingAppointments'])->name('show.pending.appointments');
+    // Add other visitor routes here
 });
 
-// Security Guard Routes
-Route::middleware(['auth'])->group(function () {
-    Route::get('/security/dashboard', [SecurityGuardController::class, 'dashboard'])->name('security.dashboard');
-    Route::post('/security/check-in', [SecurityGuardController::class, 'checkIn'])->name('security.check-in');
-    Route::post('/security/check-out', [SecurityGuardController::class, 'checkOut'])->name('security.check-out');
+//Test the csrf token
+Route::get('/test-csrf', function() {
+    return csrf_token(); // Should return a token
 });
 
-// QR Scanner routes (for admin and guard)
-Route::middleware(['auth'])->group(function () {
-    Route::get('/qr-scanner', [QrScannerController::class, 'index'])->name('qr-scanner.index');
-    Route::get('/verify-qr/{code}', [QrScannerController::class, 'verify'])->name('qr-scanner.verify');
-});
 //Test the qr code
 Route::get('/test-generate-qr', [GenerateQr::class, 'generateQrContent']);
 
 // Temporary testing route - REMOVE BEFORE PRODUCTION
 Route::get('/test-visitor-dashboard', function () {
-    return view('visitor.visitor_dashboard');
+    return view('visitor_dashboard');
 })->name('test.visitor.dashboard');
 
 // Debug route
@@ -149,6 +112,7 @@ Route::get('/debug-auth', function () {
 
 // Location tracking routes
 Route::middleware(['auth'])->group(function () {
+    Route::get('/visitortracking', [App\Http\Controllers\VisitorTrackingController::class, 'dashboard'])->name('visitor.tracking');
     Route::post('/location/update', [LocationController::class, 'updateLocationFromFrontend'])->name('location.update');
     Route::get('/location/check', [LocationController::class, 'checkLocationStatus'])->name('location.check');
 });
@@ -164,6 +128,11 @@ Route::get('/appointment/forms', function () {
 })->name('appointment.form');
 
 Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointment.store');
+
+Route::get('/appointments/approved', [AppointmentController::class, 'getApprovedAppointments'])->name('appointments.approved');
+Route::get('/appointments/pending', [AppointmentController::class, 'showPendingAppointments'])->name('appointments.pending');
+Route::get('/appointments/rejected', [AppointmentController::class, 'showRejectedAppointments'])->name('appointments.rejected');
+Route::get('/appointments/{appointment}', [AppointmentController::class, 'show'])->name('appointments.show');
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\AdminDashboardController::class, 'index'])->name('admin.dashboard');

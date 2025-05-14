@@ -6,6 +6,26 @@
 .sidebar {
     background: linear-gradient(to bottom, #B45309, #D97706);
     min-height: 100vh;
+<<<<<<< HEAD
+=======
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
+}
+@media (min-width: 1200px) {
+    .sidebar {
+        border-radius: 24px 0 0 24px;
+        margin: 16px 0 16px 16px;
+    }
+}
+@media (max-width: 991.98px) {
+    .sidebar {
+        min-height: auto;
+        height: auto;
+        border-radius: 0;
+        margin: 0;
+    }
+>>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
 }
 .sidebar-link {
     color: white;
@@ -24,7 +44,11 @@
 
 /* Buttons */
 .submit-btn {
+<<<<<<< HEAD
     width: 10%;
+=======
+    width: 100%;
+>>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
     padding: 0.75rem;
     border: none;
     border-radius: 4px;
@@ -32,9 +56,12 @@
     font-weight: 400;
     cursor: pointer;
     transition: background-color 0.2s;
+<<<<<<< HEAD
 }
 
 .submit-btn {
+=======
+>>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
     background-color: #1a56db;
     color: white;
     margin-bottom: 1rem;
@@ -42,4 +69,57 @@
 
 .submit-btn:hover {
     background-color: #1e40af;
+<<<<<<< HEAD
+=======
+}
+
+/* QR Code Card Rigid Layout */
+.card-qr {
+    width: 370px !important;
+    min-width: 370px !important;
+    max-width: 370px !important;
+    height: 500px !important;
+    min-height: 500px !important;
+    max-height: 500px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    background: #fff;
+    margin: 0 auto;
+    position: relative;
+}
+
+.qr-img {
+    width: 220px !important;
+    height: 220px !important;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 1rem auto;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    background: #fff;
+    padding: 8px;
+}
+
+.card-qr .card-title,
+.card-qr .visitor-name,
+.card-qr p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto 0.5rem auto;
+}
+
+.card-qr .btn {
+    width: 90%;
+    max-width: 220px;
+    margin: 0.5rem auto 0 auto;
+    display: block;
+>>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
 }
