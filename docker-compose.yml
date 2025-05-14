@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: visitrack
+    container_name: visitrack
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - visitrack-network
+  
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: visitrack-webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - visitrack-network
+  
+  # MySQL Service
+  db:
+    image: mysql:5.7
+    container_name: visitrack-db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: visitrack
+      MYSQL_ROOT_PASSWORD: w3Mb0Me(!yh1yg!s
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql/
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - visitrack-network
+
+# Networks
+networks:
+  visitrack-network:
+    driver: bridge
+
+# Volumes
+volumes:
+  dbdata:
+    driver: local
