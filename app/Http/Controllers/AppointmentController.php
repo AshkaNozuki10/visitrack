@@ -50,19 +50,29 @@ class AppointmentController extends Controller
     {
         // Validate the request data
         $validated = $request->validate([
-<<<<<<< HEAD
             'type' => 'required|in:Walk In,Appointment',
             'transaction_type' => 'required|string',
             'purpose' => 'required|string',
-            'department' => 'required|in:CCS Department,Education Department,Accounting Department,Entrepreneurship Department,Engineering Department',
-            'building' => 'required|in:Gymnasium,Administration Building,QCU Urban Farm Zone,Korphil Building,CHED Building,QCU Entrep Zone,Belmonte Building,New Academiz Building,Quarantine Zone,Auditorium Building',
-=======
+            'department' => 'required|in:CCS Department,
+                                        Education Department,
+                                        Accounting Department,
+                                        Entrepreneurship Department,
+                                        Engineering Department',
+            'building' => 'required|in:Gymnasium,
+                                    Administration Building,
+                                    QCU Urban Farm Zone,
+                                    Korphil Building,
+                                    CHED Building,
+                                    QCU Entrep Zone,
+                                    Belmonte Building,
+                                    New Academic Building,
+                                    Quarantine Zone,
+                                    Auditorium Building',
             'appointment_type' => 'required',
             'entity' => 'required',
             'purpose' => 'required',
             'department' => 'required',
             'building' => 'required',
->>>>>>> aada54ad073618f04c840f0f888dcfc4f0c7c88e
             'appointment_date' => 'required|date|after:today',
             'appointment_time' => 'required'
         ]);
@@ -84,13 +94,10 @@ class AppointmentController extends Controller
             $appointment = new Appointment();
             $appointment->user_id = Auth::id();
             $appointment->visit_id = $visit->visit_id;
-<<<<<<< HEAD
             $appointment->type = $request->type;
             $appointment->transaction_type = $request->transaction_type;
-=======
             $appointment->appointment_type = $request->appointment_type;
             $appointment->entity = $request->entity;
->>>>>>> aada54ad073618f04c840f0f888dcfc4f0c7c88e
             $appointment->purpose = $request->purpose;
             $appointment->department = $request->department;
             $appointment->building = $request->building;
@@ -156,7 +163,6 @@ class AppointmentController extends Controller
         return view('appointments.rejected', compact('appointments'));
     }
 
-<<<<<<< HEAD
     // Get approved appointments
     public function showApprovedAppointments()
     {
@@ -182,8 +188,6 @@ class AppointmentController extends Controller
         // Return a printer-friendly view
         return view('appointments.print', compact('appointments'));
     }
-}
-=======
     public function show(Appointment $appointment)
     {
         // Ensure the user can only view their own appointments
@@ -191,7 +195,7 @@ class AppointmentController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        return view('appointments.show', compact('appointment'));
+        return view('appointments.form', compact('appointment'));
     }
 
     public function reject(Appointment $appointment)
@@ -202,4 +206,3 @@ class AppointmentController extends Controller
         return redirect()->back()->with('success', 'Appointment has been denied.');
     }
 }
->>>>>>> aada54ad073618f04c840f0f888dcfc4f0c7c88e
