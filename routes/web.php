@@ -9,15 +9,12 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GenerateQr;
 use App\Models\appointment;
-<<<<<<< HEAD
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SecurityGuardController;
 use App\Http\Controllers\QrScannerController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\DashboardController;
-=======
 use App\Http\Controllers\AdminDashboardController;
->>>>>>> aada54ad073618f04c840f0f888dcfc4f0c7c88e
 use Illuminate\Support\Facades\Auth;
 
 // Public routes
@@ -39,7 +36,7 @@ Route::get('/forgot-password', function () {
 
 //Forgot Password Page
 Route::get('/forgotpass', function () {
-    return view('auth.forgotpass');
+    return view('auth.forgot_password');
 })->name('forgotpass');
 
 //Verification Page
@@ -64,19 +61,12 @@ Route::get('/db-test', function () {
 }); 
 
 // Role-protected routes
-// Admin routes
-Route::middleware(['auth', 'admin'])->group(function () {
-<<<<<<< HEAD
+// Admin Routes
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/admin-dashboard', function () {
         return view('admin.admin_dashboard');
     })->name('admin.dashboard');
-=======
-    Route::get('admin/admin-dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
->>>>>>> aada54ad073618f04c840f0f888dcfc4f0c7c88e
-});
 
-// Admin Routes
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/visitors', [AdminController::class, 'visitors'])->name('admin.visitors');
     Route::get('/reports', [AdminController::class, 'reports'])->name('admin.reports');
@@ -88,7 +78,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
 // Visitor routes
 Route::middleware(['auth', 'visitor'])->group(function () {
-    Route::get('/visitor-dashboard', function () {
+    Route::get('/visitor/dashboard', function () {
         return view('visitor.visitor_dashboard');
     })->name('visitor.dashboard');
     
@@ -101,13 +91,13 @@ Route::middleware(['auth', 'visitor'])->group(function () {
     // Appointment routes
     // Appointment form route
     Route::get('/appointments/form', [AppointmentController::class, 'showAppointmentForm'])->name('appointment.form');
-    Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');;
+    Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
     Route::get('/appointments/print', [AppointmentController::class, 'printAppointments'])->name('print.appointments');
 
     //Approved, Rejected and Pending Appointments
     Route::get('/appointments/approved', [AppointmentController::class, 'showApprovedAppointments'])->name('show.approved.appointments');
     Route::get('/appointments/rejected', [AppointmentController::class, 'showRejectedAppointments'])->name('show.rejected.appointments');
-    Route::get('/apppointments/pending', [AppointmentController::class, 'showPendingAppointments'])->name('show.pending.appointments');
+    Route::get('/appointments/pending', [AppointmentController::class, 'showPendingAppointments'])->name('show.pending.appointments');
 });
 
 // Security Guard Routes
@@ -117,19 +107,17 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/security/check-out', [SecurityGuardController::class, 'checkOut'])->name('security.check-out');
 });
 
-<<<<<<< HEAD
 // QR Scanner routes (for admin and guard)
 Route::middleware(['auth'])->group(function () {
     Route::get('/qr-scanner', [QrScannerController::class, 'index'])->name('qr-scanner.index');
     Route::get('/verify-qr/{code}', [QrScannerController::class, 'verify'])->name('qr-scanner.verify');
 });
-=======
 //Test the qr code
 Route::get('/test-generate-qr', [GenerateQr::class, 'generateQrContent']);
 
 // Temporary testing route - REMOVE BEFORE PRODUCTION
 Route::get('/test-visitor-dashboard', function () {
-    return view('visitor_dashboard');
+    return view('visitor.visitor_dashboard');
 })->name('test.visitor.dashboard');
 
 // Debug route
@@ -177,11 +165,6 @@ Route::get('/appointment/forms', function () {
 
 Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointment.store');
 
-Route::get('/appointments/approved', [AppointmentController::class, 'getApprovedAppointments'])->name('appointments.approved');
-Route::get('/appointments/pending', [AppointmentController::class, 'showPendingAppointments'])->name('appointments.pending');
-Route::get('/appointments/rejected', [AppointmentController::class, 'showRejectedAppointment'])->name('appointments.rejected');
-Route::get('/appointments/{appointment}', [AppointmentController::class, 'show'])->name('appointments.show');
-
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/visitor-tracking', [App\Http\Controllers\AdminDashboardController::class, 'index'])->name('admin.visitor-tracking');
@@ -191,4 +174,3 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/reports', [App\Http\Controllers\AdminReportsController::class, 'index'])->name('admin.reports');
     Route::get('/settings', [App\Http\Controllers\AdminSettingsController::class, 'index'])->name('admin.settings');
 });
->>>>>>> aada54ad073618f04c840f0f888dcfc4f0c7c88e
