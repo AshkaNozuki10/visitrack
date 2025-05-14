@@ -17,7 +17,7 @@ class VisitorMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::check()){
-            if(Auth::user()->user->role === 'visitor') {
+            if(Auth::user()->user === 'visitor') {
                 return $next($request);
             }
             else{

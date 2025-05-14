@@ -17,7 +17,7 @@ class GuardMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::check()){
-            if(Auth::user()->user->role === 'guard') {
+            if(Auth::user()->user === 'guard') {
                 return $next($request);
             }
             else{
