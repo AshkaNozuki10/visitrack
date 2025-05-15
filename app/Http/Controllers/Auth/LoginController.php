@@ -42,16 +42,21 @@ class LoginController extends Controller
             
             Log::info('Authentication successful', [
                 'user_id' => $user->credential_id,
-                'has_info' => $user->information ? true : false,
-                'role' => $user->information ? $user->information->role : 'no role',
+                'has_info' => $user->user ? true : false,
+                'role' => $user ? $user->role : 'no role',
                 'session_id' => session()->getId()
             ]);
 
-            if ($user->information && $user->information->role === 'admin') {
-                Log::info('Redirecting to admin dashboard');
+            $user = Auth::user();
+            $role = $user->user->role;
+
+            if ($role === 'admin'){
                 return redirect()->route('admin.dashboard');
-            } else {
-                Log::info('Redirecting to visitor dashboard');
+            }
+            elseif ($role === 'guard'){
+                return redirect()->route('guard.dashboard');
+            }
+            else{
                 return redirect()->route('visitor.dashboard');
             }
         }
