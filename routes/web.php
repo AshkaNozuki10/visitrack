@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\SecurityGuardController;
 use App\Http\Controllers\QRScanController;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +22,7 @@ Route::get('/', function () {
 //Login Page
 Route::get('/login', function () {
     return view('auth.login');
-})->name('login'); // Changed from 'show.login' to 'login'
+})->name('show.login'); // Changed from 'show.login' to 'login'
 
 //Registration Page
 Route::get('/register', [RegisteredUserController::class, 'showRegistrationForm'])->name('show.register');
@@ -32,8 +33,8 @@ Route::post('/register', [RegisteredUserController::class, 'register'])->name('a
 
 //Forgot Password Page
 Route::get('/forgotpass', function () {
-    return view('auth.forgotpass');
-})->name('forgotpass');
+    return view('auth.forgot_password');
+})->name('forgot.password');
 
 //Verification Page
 Route::get('/verify', function () {
@@ -48,9 +49,6 @@ Route::get('/reset-password', function () {
 //Logout
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-//Testing the post method
-Route::get('test-register', [RegisteredUserController::class, 'testRegister'])->name('test.register');
-
 //Database Connection
 Route::get('/db-test', function () {
     return view('database_test');
@@ -59,15 +57,30 @@ Route::get('/db-test', function () {
 // Role-protected routes
 // Admin routes
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('admin/admin-dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/dashboard', function(){
+        return view('admin.admin_dashboard');
+    })->name('admin.dashboard');
+
 });
+
 // Visitor routes
 Route::middleware(['auth', 'visitor'])->group(function () {
-    Route::get('/visitor-dashboard', function () {
-        return view('visitor_dashboard');
+    Route::get('/visitor/dashboard', function () {
+        return view('visitor.visitor_dashboard');
     })->name('visitor.dashboard');
 
-    // Add other visitor routes here
+    //Appointments
+    Route::get('/visitor/appointment/forms', function () {
+    return view('appointments.form');
+    })->name('appointment.form');
+
+    Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointment.store');
+
+    //Approved, Rejected, and Pending
+    Route::get('/visitor/appointments/approved', [AppointmentController::class, 'getApprovedAppointments'])->name('appointments.approved');
+    Route::get('/visitor/appointments/pending', [AppointmentController::class, 'showPendingAppointments'])->name('appointments.pending');
+    Route::get('/visitor/appointments/rejected', [AppointmentController::class, 'showRejectedAppointments'])->name('appointments.rejected');
+    Route::get('/visitor/appointments/{appointment}', [AppointmentController::class, 'show'])->name('appointments.show');
 });
 
 //Test the csrf token
@@ -80,7 +93,7 @@ Route::get('/test-generate-qr', [GenerateQr::class, 'generateQrContent']);
 
 // Temporary testing route - REMOVE BEFORE PRODUCTION
 Route::get('/test-visitor-dashboard', function () {
-    return view('visitor_dashboard');
+    return view('visitor.visitor_dashboard');
 })->name('test.visitor.dashboard');
 
 // Debug route
@@ -88,7 +101,7 @@ Route::get('/debug-auth', function () {
     if (Auth::check()) {
         $user = Auth::user();
         try {
-            $info = $user->information;
+            $info = $user->user;
             $role = $info ? $info->role : 'No role found';
             
             return [
@@ -123,23 +136,21 @@ Route::post('/qr/scan', [QRScanController::class, 'scan'])->name('qr.scan');
 Route::post('/tracking/stop', [QRScanController::class, 'stopTracking'])->name('tracking.stop');
 Route::post('/appointments/{appointment}/reject', [App\Http\Controllers\AppointmentController::class, 'reject'])->name('appointments.reject');
 
-Route::get('/appointment/forms', function () {
-    return view('appointments.form');
-})->name('appointment.form');
+//Admin Route
+Route::middleware(['auth', 'admin'])->group(function () {
+    // Show admin dashboard
+    Route::get('/admin/dashboard', [App\Http\Controllers\AdminDashboardController::class, 'dashboard'])->name('admin.dashboard');
 
-Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointment.store');
+    Route::get('/admin/visitor-tracking', [App\Http\Controllers\AdminDashboardController::class, 'visitorTracking'])->name('admin.visitor-tracking');
+    Route::get('/admin/approved-appointments', [App\Http\Controllers\AdminDashboardController::class, 'approvedAppointments'])->name('admin.approved-appointments');
+    Route::get('/admin/rejected-appointments', [App\Http\Controllers\AdminDashboardController::class, 'rejectedAppointments'])->name('admin.rejected-appointments');
+    Route::get('/admin/pending-appointments', [App\Http\Controllers\AdminDashboardController::class, 'pendingAppointmentsForAdmin'])->name('admin.pending-appointments');
+    Route::get('/admin/reports', [App\Http\Controllers\AdminReportsController::class, 'showReports'])->name('admin.reports');
+    Route::get('/admin/settings', [App\Http\Controllers\AdminSettingsController::class, 'settings'])->name('admin.settings');
+});
 
-Route::get('/appointments/approved', [AppointmentController::class, 'getApprovedAppointments'])->name('appointments.approved');
-Route::get('/appointments/pending', [AppointmentController::class, 'showPendingAppointments'])->name('appointments.pending');
-Route::get('/appointments/rejected', [AppointmentController::class, 'showRejectedAppointments'])->name('appointments.rejected');
-Route::get('/appointments/{appointment}', [AppointmentController::class, 'show'])->name('appointments.show');
-
-Route::prefix('admin')->middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\AdminDashboardController::class, 'index'])->name('admin.dashboard');
-    Route::get('/visitor-tracking', [App\Http\Controllers\AdminDashboardController::class, 'index'])->name('admin.visitor-tracking');
-    Route::get('/approved-appointments', [App\Http\Controllers\AdminDashboardController::class, 'index'])->name('admin.approved-appointments');
-    Route::get('/rejected-appointments', [App\Http\Controllers\AdminDashboardController::class, 'index'])->name('admin.rejected-appointments');
-    Route::get('/pending-appointments', [App\Http\Controllers\AdminDashboardController::class, 'pendingAppointmentsForAdmin'])->name('admin.pending-appointments');
-    Route::get('/reports', [App\Http\Controllers\AdminReportsController::class, 'index'])->name('admin.reports');
-    Route::get('/settings', [App\Http\Controllers\AdminSettingsController::class, 'index'])->name('admin.settings');
+//Guard Route
+Route::middleware(['auth', 'guard'])->group(function (){
+    //Show guard dashboard
+    Route::get('/guard/dashboard', [SecurityGuardController::class, 'dashboard'])->name('guard.dashboard');
 });
