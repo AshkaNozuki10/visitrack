@@ -61,6 +61,7 @@ class Kernel extends HttpKernel
         // Add your custom middleware here
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'visitor' => \App\Http\Middleware\VisitorMiddleware::class,
+        'guard' => \App\Http\Middleware\GuardMiddleware::class,
         'down' => \App\Http\Middleware\DownForMaintenance::class,
     ];
 }
