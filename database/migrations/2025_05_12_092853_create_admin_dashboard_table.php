@@ -15,12 +15,7 @@ return new class extends Migration
             $table->boolean('is_blacklisted')->default(false);
             $table->text('blacklist_reason')->nullable();
         });
-
-        Schema::table('appointment', function(Blueprint $table){
-            $table->string('purpose')->nullable();
-            $table->string('department')->nullable();
-        });
-
+        
         // Create activity_logs table
         Schema::create('activity_logs', function (Blueprint $table) {
             $table->id();

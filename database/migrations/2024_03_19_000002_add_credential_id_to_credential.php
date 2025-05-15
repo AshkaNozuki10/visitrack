@@ -36,7 +36,7 @@ return new class extends Migration
         Schema::table('credential', function (Blueprint $table) {
             $table->foreign('user_id')
                   ->references('user_id')
-                  ->on('user_information')
+                  ->on('user')
                   ->onDelete('cascade');
         });
     }
@@ -69,7 +69,7 @@ return new class extends Migration
         Schema::table('credential', function (Blueprint $table) {
             $table->foreign('user_id')
                   ->references('user_id')
-                  ->on('user_information')
+                  ->on('user')
                   ->onDelete('cascade');
         });
     }

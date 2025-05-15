@@ -103,19 +103,19 @@ return new class extends Migration
             $table->timestamps();
 
         // Add foreign keys after all tables exist
-        $table->foreign('user_id')->references('user_id')->on('user_information');
+        $table->foreign('user_id')->references('user_id')->on('user');
         $table->foreign('visit_id')->references('visit_id')->on('visit');
         $table->foreign('qr_code')->references('qr_id')->on('qr_code');
         });
 
         // Add foreign keys to previously created tables
         Schema::table('visit', function (Blueprint $table) {
-            $table->foreign('user_id')->references('user_id')->on('user_information');
+            $table->foreign('user_id')->references('user_id')->on('user');
             $table->foreign('location')->references('location_id')->on('location');
         });
 
         Schema::table('qr_code', function (Blueprint $table) {
-            $table->foreign('user_id')->references('user_id')->on('user_information');
+            $table->foreign('user_id')->references('user_id')->on('user');
         });
     }
 
