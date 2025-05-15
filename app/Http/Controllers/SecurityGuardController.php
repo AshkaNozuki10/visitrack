@@ -69,7 +69,7 @@ class SecurityGuardController extends Controller
     public function checkIn(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:user_information,user_id',
+            'user_id' => 'required|exists:user,user_id',
             'location' => 'required|exists:location,location_id'
         ]);
 

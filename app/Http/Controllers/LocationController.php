@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\information;
+use App\Models\User;
 use App\Notifications\GpsStatusNotification;
 use Illuminate\Http\Request;
 
 class LocationController extends Controller{
 
     //Toggle the user's
-    public function toggleLocationTracking(information $user, bool $status){
+    public function toggleLocationTracking(User $user, bool $status){
         $user->update([
             'location_tracking_enabled' => $status,
             'last_location_updated_at' => $status ? now() : null
@@ -21,7 +21,7 @@ class LocationController extends Controller{
     }
 
     //Updates the user's location
-    public function updateUserLocation(information $user, float $latitude, float $longitude): void{
+    public function updateUserLocation(User $user, float $latitude, float $longitude): void{
         if(!$user->location_tracking_enabled){
             return;
         }
@@ -35,7 +35,7 @@ class LocationController extends Controller{
         $this->checkCampusZone($user, $latitude, $longitude);
     }
 
-    public function checkCampusZone(information $user, float $lat, float $lng): bool
+    public function checkCampusZone(User $user, float $lat, float $lng): bool
     {   
         // Create a cache key based on the coordinates
         $cacheKey = "campus_zone_{$lat}_{$lng}";
@@ -76,7 +76,7 @@ class LocationController extends Controller{
         });
     }
 
-    protected function triggerSafetyAlert(information $user): void
+    protected function triggerSafetyAlert(User $user): void
     {
         // Alert implementation
     }
@@ -99,7 +99,7 @@ class LocationController extends Controller{
         return $inside;
     }
 
-    public function sendTrackingStatusNotification(information $user){
+    public function sendTrackingStatusNotification(User $user){
         $notification = "Your location is off, please turn on your GPS.";
     }
 
@@ -134,18 +134,18 @@ class LocationController extends Controller{
         $longitude = $validated['longitude'];
         
         // Toggle tracking on if not already enabled
-        if (!$user->information->location_tracking_enabled) {
-            $this->toggleLocationTracking($user->information, true);
+        if (!$user->user->location_tracking_enabled) {
+            $this->toggleLocationTracking($user->user, true);
         }
         
         // Update user location
-        $this->updateUserLocation($user->information, $latitude, $longitude);
+        $this->updateUserLocation($user->user, $latitude, $longitude);
         
         // Clear the user's location status cache
         cache()->forget("location_status_{$user->id}");
         
         // Check if inside campus with caching
-        $isWithinCampus = $this->checkCampusZone($user->information, $latitude, $longitude);
+        $isWithinCampus = $this->checkCampusZone($user->user, $latitude, $longitude);
         
         // Try to identify the building based on coordinates with caching
         $buildingName = $this->identifyBuilding($latitude, $longitude);
@@ -169,8 +169,8 @@ class LocationController extends Controller{
         return response()->json(
             cache()->remember($cacheKey, now()->addSeconds(30), function () use ($user) {
                 return [
-                    'tracking_enabled' => $user->information->location_tracking_enabled ?? false,
-                    'last_updated' => $user->information->last_location_updated_at
+                    'tracking_enabled' => $user->user->location_tracking_enabled ?? false,
+                    'last_updated' => $user->user->last_location_updated_at
                 ];
             })
         );
