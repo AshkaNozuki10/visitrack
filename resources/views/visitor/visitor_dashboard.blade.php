@@ -241,31 +241,6 @@
                     </div>
                     <div class="sidebar-title">VISITOR'S<br>DASHBOARD</div>
                 </div>
-<<<<<<< HEAD:resources/views/visitor/visitor_dashboard.blade.php
-
-                <nav class="mt-4">
-                    <a href="#" class="sidebar-link mb-2">
-                        PROFILE
-                    </a>
-                    <a href="#" class="sidebar-link mb-2">
-                        Account Settings
-                    </a>
-                    <a href="{{ route('visitor.dashboard') }}" class="sidebar-link mb-2">
-                        Campus Map
-                    </a>
-
-                    <div class="mb-2">
-                        <a href="{{ route('appointment.form') }}"><div class="sidebar-link">Appointments</div></a>
-                        <div class="sub-menu">
-                            <a href="{{ route('show.approved.appointments') }}" class="sidebar-link mb-1">Approved</a>
-                            <a href="{{ route('show.rejected.appointments') }}" class="sidebar-link mb-1">Rejected</a>
-                            <a href="{{ route('show.pending.appointments') }}" class="sidebar-link">Pending</a>
-                        </div>
-                    </div>
-                    
-                    <a href="{{ route('logout') }}" 
-                       class="sidebar-link mt-5"
-=======
                 <div class="sidebar-animated"><a href="#" class="sidebar-link">PROFILE</a></div>
                 <div class="sidebar-animated"><a href="#" class="sidebar-link">Account Settings</a></div>
                 <div class="sidebar-animated"><a href="#" class="sidebar-link">Campus Map</a></div>
@@ -279,7 +254,6 @@
                 </div>
                 <div class="sidebar-animated sidebar-footer">
                     <a href="{{ route('logout') }}" class="sidebar-link"
->>>>>>> aada54ad073618f04c840f0f888dcfc4f0c7c88e:resources/views/visitor_dashboard.blade.php
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Log Out
                     </a>

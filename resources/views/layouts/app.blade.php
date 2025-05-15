@@ -21,9 +21,6 @@
 </head>
 <body>
     <div id="app">
-<<<<<<< HEAD
-        @yield('content')
-=======
         @hasSection('custom_admin_nav')
             @yield('custom_admin_nav')
         @else
@@ -40,7 +37,7 @@
                         <!-- Left Side Of Navbar -->
                         <ul class="navbar-nav me-auto">
                             @auth
-                                @php $role = Auth::user()->information->role ?? 'visitor'; @endphp
+                                @php $role = Auth::user()->user->role ?? 'visitor'; @endphp
                                 @if($role === 'admin')
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('admin.dashboard') }}"><i class="fa-solid fa-gauge me-1"></i>Admin Dashboard</a>
@@ -66,7 +63,7 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
                                         <span class="me-2"><i class="fa-solid fa-user-circle fa-lg"></i></span>
-                                        <span>{{ Auth::user()->information ? Auth::user()->information->first_name : Auth::user()->username }}</span>
+                                        <span>{{ Auth::user()->user ? Auth::user()->user->first_name : Auth::user()->username }}</span>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end shadow">
                                         <li>
@@ -102,7 +99,6 @@
 
         @yield('content')
         </main>
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
     </div>
 
     <!-- Bootstrap Bundle with Popper -->

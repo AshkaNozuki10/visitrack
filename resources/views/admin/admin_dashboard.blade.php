@@ -20,7 +20,7 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-user-circle fa-lg me-2"></i> {{ Auth::user()->information->first_name }}
+                            <i class="fas fa-user-circle fa-lg me-2"></i> {{ Auth::user()->user->first_name }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end animate__animated animate__fadeIn" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="{{ route('admin.settings') }}"><i class="fas fa-cog me-2"></i>Settings</a></li>
@@ -168,15 +168,7 @@
                                 </a>
                             </div>
                             <div class="col-md-3">
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                <a href="#" class="quick-action-item card p-3 text-center shadow-sm border-0 animate__animated animate__pulse" style="background: #06b6d4; color: white;">
-=======
                                 <a href="{{ route('admin.settings') }}" class="quick-action-item card p-3 text-center shadow-sm border-0 animate__animated animate__pulse" style="background: #06b6d4; color: white;">
->>>>>>> aada54ad073618f04c840f0f888dcfc4f0c7c88e
-=======
-                                <a href="{{ route('admin.settings') }}" class="quick-action-item card p-3 text-center shadow-sm border-0 animate__animated animate__pulse" style="background: #06b6d4; color: white;">
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
                                     <div class="quick-action-icon mb-2">
                                         <i class="fas fa-cog fa-2x"></i>
                                     </div>
@@ -186,8 +178,6 @@
                         </div>
                     </div>
                 </div>
-<<<<<<< HEAD
-=======
                 <div class="row mt-5">
                     <div class="col-12">
                         <h2 class="mb-4">Active Visitors Map</h2>
@@ -227,7 +217,6 @@
                         </div>
                     </div>
                 </div>
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
             </div>
         </div>
     </div>
@@ -265,9 +254,6 @@
     .main-content {
         margin-top: 2rem !important;
     }
-<<<<<<< HEAD
-</style>
-=======
 </style>
 
 @section('styles')
@@ -295,4 +281,3 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 @endpush
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789

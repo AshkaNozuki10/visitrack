@@ -14,14 +14,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<<<<<<< HEAD
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
-</head>
-
-<body >
-    <!-- Navigation -->
-   @include('partials.nav')
-=======
     
     <style>
         :root {
@@ -353,7 +345,6 @@
             </div>
         </div>
     </nav>
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
 
     <!-- Main Content -->
     <div class="container main-container">
@@ -393,11 +384,7 @@
             <!-- Right Column: Login Form -->
             <div class="col-lg-6 login-container slide-in-right">
                 <div class="card login-card animate__animated animate__fadeInUp animate__delay-1s" style="border-radius: 16px; overflow: hidden;">
-<<<<<<< HEAD
-                    <div class="card-header text-center" style="background-color:#476FB2"; border: none; padding: 25px;">
-=======
                     <div class="card-header text-center" style="background: linear-gradient(to right, #7749F8, #5a36c9); border: none; padding: 25px;">
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
                         <h4 class="mb-0 fw-bold" style="color: white; letter-spacing: 0.5px;">Login to your account</h4>
                     </div>
                     <div class="card-body p-4">
@@ -465,13 +452,8 @@
                             @endif
 
                             <!-- Login Button -->
-<<<<<<< HEAD
-                            <div class="d-flex justify-content-center mt-3">
-                                <button type="submit" class="btn btn-primary animate__animated animate__pulse animate__infinite animate__slow" style="width: 200px; background: linear-gradient(135deg, #7749F8, #5a36c9); border: none; border-radius: 50px; padding: 12px; font-size: 1.1rem; font-weight: 600; letter-spacing: 1px; box-shadow: 0 10px 20px rgba(90, 54, 201, 0.3);">
-=======
                             <div class="d-grid gap-2 mt-4">
                                 <button type="submit" class="btn btn-primary animate__animated animate__pulse animate__infinite animate__slow" style="background: linear-gradient(135deg, #7749F8, #5a36c9); border: none; border-radius: 50px; padding: 12px; font-size: 1.1rem; font-weight: 600; letter-spacing: 1px; box-shadow: 0 10px 20px rgba(90, 54, 201, 0.3);">
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
                                     <i class="fas fa-sign-in-alt me-2"></i> Login
                                 </button>
                             </div>
@@ -481,17 +463,10 @@
 
                         <!-- Form Links -->
                         <div class="form-links d-flex justify-content-between mt-3">
-<<<<<<< HEAD
-                            <a href="{{ route('forgot.password') }}" class="btn btn-link" style="color: #0D6EFD; text-decoration: none; padding: 8px 12px; transition: all 0.3s ease;">
-                                <i class="fas fa-key me-1"></i> Forgot Password?
-                            </a>
-                            <a href="{{ route('show.register') }}" class="btn" style="background-color: rgba(119, 73, 248, 0.1); color:#0D6EFD; border-radius: 50px; padding: 8px 16px; transition: all 0.3s ease;">
-=======
-                            <a href="{{ route('forgotpass') }}" class="btn btn-link" style="color: #7749F8; text-decoration: none; padding: 8px 12px; transition: all 0.3s ease;">
+                            <a href="{{ route('forgot.password') }}" class="btn btn-link" style="color: #7749F8; text-decoration: none; padding: 8px 12px; transition: all 0.3s ease;">
                                 <i class="fas fa-key me-1"></i> Forgot Password?
                             </a>
                             <a href="{{ route('show.register') }}" class="btn" style="background-color: rgba(119, 73, 248, 0.1); color: #7749F8; border-radius: 50px; padding: 8px 16px; transition: all 0.3s ease;">
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
                                 <i class="fas fa-user-plus me-1"></i> Create an account
                             </a>
                         </div>
@@ -502,10 +477,6 @@
     </div>
 
     <!-- Footer -->
-<<<<<<< HEAD
-    
-    @include('partials.footer')
-=======
     <footer class="footer mt-5" style="background: linear-gradient(to right, rgba(78, 84, 200, 0.9), rgba(119, 73, 248, 0.9)); padding: 20px 0; box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);">
         <div class="container">
             <div class="row align-items-center">
@@ -535,7 +506,6 @@
             </div>
         </div>
     </footer>
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
 
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -583,8 +553,4 @@
     </script>
 </body>
 
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789

@@ -52,11 +52,7 @@
                 </div>
             @endif
 
-<<<<<<< HEAD
-            <form id="registration_form" action="{{ route('auth.register') }}" method="POST">
-=======
             <form id="registration_form" action="{{ route('auth.registration') }}" method="POST">
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
                 @csrf
                 <!-- Personal Information Section -->
                 <div class="form-section">
@@ -179,14 +175,9 @@
                     <p class="section-description">Create your login credentials. Choose a strong password that's at least 8 characters long.</p>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="email">Email: <span class="required">*</span></label>
-<<<<<<< HEAD
-                            <input type="email" class="form-control @error('username') is-invalid @enderror" id="username" name="username" value="{{ old('username') }}" required>
-                            @error('username')
-=======
+                            <label for="username">Username (Email): <span class="required">*</span></label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required>
-                            @error('email')
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
+                            @error('username')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -208,11 +199,7 @@
                 </div>
 
                 <div class="form-buttons">
-<<<<<<< HEAD
                     <a href="{{ route('show.login') }}" class="btn btn-secondary">Cancel</a>
-=======
-                    <a href="{{ route('login') }}" class="btn btn-secondary">Cancel</a>
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
                     <button type="submit" class="btn btn-primary">Register</button>
                 </div>
 
@@ -230,8 +217,4 @@
     @include('partials.footer')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789

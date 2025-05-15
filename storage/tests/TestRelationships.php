@@ -4,8 +4,8 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use App\Models\TblAddress;
-use App\Models\TblInformation;
+use App\Models\Address;
+use App\Models\User;
 use Tests\TestCase;
 
 class TestRelationships extends TestCase
@@ -13,10 +13,10 @@ class TestRelationships extends TestCase
     //Test the user address
     public function test_user_address()
     {
-        $address = TblAddress::factory()->create();
-        $info =  TblInformation::factory()->create(['address' => $address->address_id]);
+        $address = Address::factory()->create();
+        $user =  User::factory()->create(['address' => $address->address_id]);
 
-        $this->assertInstanceOf(TblAddress::class, $info->address);
+        $this->assertInstanceOf(Address::class, $user->address);
         //$this->assertEquals($address->id, $info->address->id);
     }
     
