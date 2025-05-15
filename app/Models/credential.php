@@ -14,8 +14,12 @@ class Credential extends Authenticatable
     public $incrementing = true;
     public $timestamps = true;
 
-    public function information(){
-        return $this->belongsTo(Information::class, 'user_id', 'user_id')->withDefault([
+    /**
+     * Get the related User model (contains the role and personal info).
+     * Usage: Auth::user()->user->role
+     */
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id', 'user_id')->withDefault([
             'role' => 'visitor' // Default role if relationship fails
         ]);
     }
