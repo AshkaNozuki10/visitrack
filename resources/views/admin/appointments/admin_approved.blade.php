@@ -3,8 +3,8 @@
 @section('content')
 <div class="container py-5">
     <div class="card shadow-lg">
-        <div class="card-header bg-primary text-white">
-            <h3 class="mb-0">Pending Appointments (Admin Review)</h3>
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">Approved Appointments</h3>
         </div>
         <div class="card-body">
             @if(session('success'))
@@ -41,16 +41,14 @@
                             <td>{{ $appointment->building }}</td>
                             <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('M d, Y') }}</td>
                             <td>{{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}</td>
-                            <td><span class="badge bg-warning">Pending</span></td>
+                            <td><span class="badge bg-success">Approved</span></td>
                             <td>
-                                <form action="{{ route('appointments.approve', $appointment->appointment_id ?? $appointment->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    <button type="submit" class="btn btn-success btn-sm">Approve</button>
-                                </form>
-                                <form action="{{ route('appointments.reject', $appointment->appointment_id ?? $appointment->id) }}" method="POST" class="d-inline ms-1">
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm">Deny</button>
-                                </form>
+                                <a href="{{ route('', $appointment->appointment_id ?? $appointment->id) }}" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-qrcode me-1"></i> Generate QR
+                                </a>
+                                <a href="{{ route('', $appointment->appointment_id ?? $appointment->id) }}" class="btn btn-info btn-sm ms-1">
+                                    <i class="fas fa-eye me-1"></i> Details
+                                </a>
                             </td>
                         </tr>
                         @endforeach
@@ -58,9 +56,9 @@
                 </table>
             </div>
             @else
-            <div class="alert alert-info">No pending appointments found.</div>
+            <div class="alert alert-info">No approved appointments found.</div>
             @endif
         </div>
     </div>
 </div>
-@endsection 
+@endsection

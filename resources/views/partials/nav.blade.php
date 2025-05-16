@@ -12,8 +12,8 @@
 
                 <!-- Login and Sign Up -->
                 <div class="d-flex align-items-center gap-2 ms-2">
-                    <a href="/login" class="btn fw-bold fs-6 px-4" style="color: #fff; background: transparent; border: 2px solid #fff; border-radius: 2rem; transition: background 0.2s, color 0.2s;">Login</a>
-                    <a href="/register" class="btn fw-bold fs-6 px-4" style="background: linear-gradient(90deg, #ff6bcb 0%, #7749F8 100%); color: #fff; border: none; border-radius: 2rem; box-shadow: 0 2px 12px #7749f855; transition: background 0.2s, color 0.2s;">Sign Up</a>
+                    <a href="{{ route('show.login') }}" class="btn fw-bold fs-6 px-4" style="color: #fff; background: transparent; border: 2px solid #fff; border-radius: 2rem; transition: background 0.2s, color 0.2s;">Login</a>
+                    <a href="{{ route('show.register') }}" class="btn fw-bold fs-6 px-4" style="background: linear-gradient(90deg, #ff6bcb 0%, #7749F8 100%); color: #fff; border: none; border-radius: 2rem; box-shadow: 0 2px 12px #7749f855; transition: background 0.2s, color 0.2s;">Sign Up</a>
                 </div>
             </div>
         @endif

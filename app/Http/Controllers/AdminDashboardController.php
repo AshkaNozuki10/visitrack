@@ -6,16 +6,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Appointment;
 use App\Models\Building;
+use App\Models\Visit;
 
 class AdminDashboardController extends Controller
 {
     /**
      * Show the admin dashboard with summary statistics and recent activities.
      */
-    public function dashboard()
-    {
-        //Show dashboard after admin login
-        return view ('admin.admin_dashboard');
+    public function dashboard(){
+        $records = Visit::all();
+        return view('admin.admin_dashboard', compact('records'));
+
+        $activeStudents = []; // Or fetch active students from your database
+        $activeStudentsCount = 0; // Or count of active students
 
         // Get counts for dashboard
         $activeStudentsCount = DB::table('visit')->whereNull('exit_time')->count();
@@ -77,10 +80,12 @@ class AdminDashboardController extends Controller
 
         return view('admin.admin_dashboard', [
             'activeStudentsCount' => $activeStudentsCount,
+            'activeStudents' => $activeStudents,
             'pendingAppointmentsCount' => $pendingAppointmentsCount,
             'approvedAppointmentsCount' => $approvedAppointmentsCount,
             'buildingsCount' => $buildingsCount,
-            'recentActivities' => $recentActivities
+            'recentActivities' => $recentActivities,
+            'records' => $records ?? collect(), // Always pass $records, default to empty collection if not set
         ]);
     }
 
@@ -107,7 +112,7 @@ class AdminDashboardController extends Controller
     public function approvedAppointments()
     {
         $appointments = Appointment::where('approval', 'approved')->with(['visit', 'user'])->orderBy('created_at', 'desc')->get();
-        return view('admin.admin_approved', compact('appointments'));
+        return view('admin.appointments.admin_approved', compact('appointments'));
     }
 
     /**
@@ -116,7 +121,7 @@ class AdminDashboardController extends Controller
     public function rejectedAppointments()
     {
         $appointments = Appointment::where('approval', 'rejected')->with(['visit', 'user'])->orderBy('created_at', 'desc')->get();
-        return view('admin.admin_rejected', compact('appointments'));
+        return view('admin.appointments.admin_rejected', compact('appointments'));
     }
 
     /**
@@ -125,7 +130,7 @@ class AdminDashboardController extends Controller
     public function pendingAppointments()
     {
         $appointments = Appointment::whereNull('approval')->with(['visit', 'user'])->orderBy('created_at', 'desc')->get();
-        return view('admin.admin_pending', compact('appointments'));
+        return view('admin.appointments.admin_pending', compact('appointments'));
     }
 
     /**

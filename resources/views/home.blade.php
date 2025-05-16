@@ -226,8 +226,8 @@
                 <div class="hero-title">A REAL TIME LOCATION TRACKER FOR QCU VISITORS</div>
                 <div class="hero-desc">At Quezon City University, we believe in creating a safe and connected environment for our students, faculty, and staff. That's why we've developed a cutting-edge location tracking system to enhance campus security and give you peace of mind.</div>
                 <div class="hero-btns">
-                    <a href="/register" class="btn btn-register">Register</a>
-                    <a href="#contact" class="btn btn-contact">Contact Us</a>
+                    <a href="{{ route('show.register') }}" class="btn btn-register">Register</a>
+                    <a href="#" class="btn btn-contact">Contact Us</a>
                 </div>
             </div>
         </div>

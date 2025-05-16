@@ -20,9 +20,7 @@ Route::get('/', function () {
 })->name('home');
 
 //Login Page
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('show.login'); // Changed from 'show.login' to 'login'
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('show.login');
 
 //Registration Page
 Route::get('/register', [RegisteredUserController::class, 'showRegistrationForm'])->name('show.register');
@@ -132,25 +130,29 @@ Route::middleware(['auth'])->group(function () {
 
 // Appointment and QR routes
 Route::post('/appointments/{appointment}/approve', [AppointmentController::class, 'approve'])->name('appointments.approve');
-Route::post('/qr/scan', [QRScanController::class, 'scan'])->name('qr.scan');
-Route::post('/tracking/stop', [QRScanController::class, 'stopTracking'])->name('tracking.stop');
-Route::post('/appointments/{appointment}/reject', [App\Http\Controllers\AppointmentController::class, 'reject'])->name('appointments.reject');
 
 //Admin Route
 Route::middleware(['auth', 'admin'])->group(function () {
     // Show admin dashboard
     Route::get('/admin/dashboard', [App\Http\Controllers\AdminDashboardController::class, 'dashboard'])->name('admin.dashboard');
 
+    //Visitor Traccking
     Route::get('/admin/visitor-tracking', [App\Http\Controllers\AdminDashboardController::class, 'visitorTracking'])->name('admin.visitor-tracking');
-    Route::get('/admin/approved-appointments', [App\Http\Controllers\AdminDashboardController::class, 'approvedAppointments'])->name('admin.approved-appointments');
-    Route::get('/admin/rejected-appointments', [App\Http\Controllers\AdminDashboardController::class, 'rejectedAppointments'])->name('admin.rejected-appointments');
-    Route::get('/admin/pending-appointments', [App\Http\Controllers\AdminDashboardController::class, 'pendingAppointmentsForAdmin'])->name('admin.pending-appointments');
+
+    //Appointments
+    Route::get('/admin/approved-appointments', [App\Http\Controllers\AdminDashboardController::class, 'approvedAppointments'])->name('admin.approved.appointments');
+    Route::get('/admin/rejected-appointments', [App\Http\Controllers\AdminDashboardController::class, 'rejectedAppointments'])->name('admin.rejected.appointments');
+    Route::get('/admin/pending-appointments', [App\Http\Controllers\AdminDashboardController::class, 'pendingAppointments'])->name('admin.pending.appointments');
+
+    //Admin Reports
     Route::get('/admin/reports', [App\Http\Controllers\AdminReportsController::class, 'showReports'])->name('admin.reports');
+
+    //Admin Account Settings
     Route::get('/admin/settings', [App\Http\Controllers\AdminSettingsController::class, 'settings'])->name('admin.settings');
+
+    //QR Scan
+    Route::post('/qr/scan', [QRScanController::class, 'scan'])->name('qr.scan');
+    Route::post('/tracking/stop', [QRScanController::class, 'stopTracking'])->name('tracking.stop');
 });
 
 //Guard Route
-Route::middleware(['auth', 'guard'])->group(function (){
-    //Show guard dashboard
-    Route::get('/guard/dashboard', [SecurityGuardController::class, 'dashboard'])->name('guard.dashboard');
-});

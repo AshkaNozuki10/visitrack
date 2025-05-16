@@ -2,9 +2,6 @@
 
 @section('styles')
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<<<<<<< HEAD
-<link rel="stylesheet" href="{{ asset('css/appointment.css') }}">
-=======
 <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
 <style>
     :root {
@@ -61,7 +58,6 @@
         border:none;
     }
 </style>
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
 @endsection
 
 @section('content')
@@ -78,35 +74,6 @@
                 </div>
 
                 <nav class="mt-4">
-<<<<<<< HEAD
-                    <a href="#" class="sidebar-link mb-2">
-                        PROFILE
-                    </a>
-                    <a href="#" class="sidebar-link mb-2">
-                        Account Settings
-                    </a>
-                    <a href="{{ route('visitor.dashboard') }}" class="sidebar-link mb-2">
-                        Campus Map
-                    </a>
-
-                    <div class="mb-2">
-                        <a href="{{ route('appointment.form') }}"><div class="sidebar-link">Appointments</div></a>
-                        <div class="sub-menu">
-                            <a href="{{ route('show.approved.appointments') }}" class="sidebar-link mb-1">Approved</a>
-                            <a href="{{ route('show.rejected.appointments') }}" class="sidebar-link mb-1">Rejected</a>
-                            <a href="{{ route('show.pending.appointments') }}" class="sidebar-link">Pending</a>
-                        </div>
-                    </div>
-
-                    <a href="{{ route('logout') }}" 
-                       class="sidebar-link mt-5"
-                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        Log Out
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-=======
                     <a href="#" class="sidebar-link mb-2">PROFILE</a>
                     <a href="#" class="sidebar-link mb-2">Account Settings</a>
                     <a href="#" class="sidebar-link mb-2">Campus Map</a>
@@ -120,17 +87,12 @@
                     </div>
                     <a href="{{ route('logout') }}" class="sidebar-link mt-5" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
                 </nav>
             </div>
         </div>
 
         <!-- Main Content -->
-<<<<<<< HEAD
-        <div class="col-md-9 col-lg-10 p-4">
-=======
         <div class="col-md-9 col-lg-10 p-4 main-content">
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
             <div class="card shadow">
                 <div class="card-body">
                     <h2 class="card-title mb-4">VISITOR'S APPOINTMENT FORM</h2>
@@ -269,11 +231,7 @@
                             </div>
                         </div>
 
-<<<<<<< HEAD
-                        <button type="submit" class="submit-btn">Submit</button>
-=======
                         <button type="submit" class="submit-btn btn btn-primary w-100 py-2 mt-3" style="font-weight:600; border-radius:12px; background: linear-gradient(90deg, #7749F8 0%, #4a89dc 100%); border:none;">Submit</button>
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
                     </form>
                 </div>
             </div>

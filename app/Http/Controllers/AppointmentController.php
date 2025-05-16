@@ -19,35 +19,10 @@ class AppointmentController extends Controller
         $this->qrGenerator = $qrGenerator;
     }
 
-<<<<<<< HEAD
-    public function showAppointmentForm(){
-        return view('appointments.form');
-    }
-
-=======
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
     public function approve(Appointment $appointment)
     {
         // Update appointment status to approved
         $appointment->update([
-<<<<<<< HEAD
-            'approval' => 1,
-            'approved_at' => now()
-        ]);
-
-        // Generate QR code automatically
-        try {
-            $qrCode = $this->qrGenerator->generateForAppointment($appointment);
-            return response()->json([
-                'message' => 'Appointment approved and QR code generated successfully',
-                'qr_code' => $qrCode
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Appointment approved but QR code generation failed: ' . $e->getMessage()
-            ], 500);
-        }
-=======
             'approval' => 1
         ]);
 
@@ -75,7 +50,6 @@ class AppointmentController extends Controller
 
         // Redirect back with a success message
         return back()->with('success', 'Appointment approved! The visitor can now see their QR code in their Approved Appointments.');
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
     }
 
     // Method to store appointments
@@ -83,27 +57,6 @@ class AppointmentController extends Controller
     {
         // Validate the request data
         $validated = $request->validate([
-<<<<<<< HEAD
-            'type' => 'required|in:Walk In,Appointment',
-            'transaction_type' => 'required|string',
-            'purpose' => 'required|string',
-            'department' => 'required|in:CCS Department,
-                                        Education Department,
-                                        Accounting Department,
-                                        Entrepreneurship Department,
-                                        Engineering Department',
-            'building' => 'required|in:Gymnasium,
-                                    Administration Building,
-                                    QCU Urban Farm Zone,
-                                    Korphil Building,
-                                    CHED Building,
-                                    QCU Entrep Zone,
-                                    Belmonte Building,
-                                    New Academic Building,
-                                    Quarantine Zone,
-                                    Auditorium Building',
-=======
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
             'appointment_type' => 'required',
             'entity' => 'required',
             'purpose' => 'required',
@@ -130,11 +83,6 @@ class AppointmentController extends Controller
             $appointment = new Appointment();
             $appointment->user_id = Auth::id();
             $appointment->visit_id = $visit->visit_id;
-<<<<<<< HEAD
-            $appointment->type = $request->type;
-            $appointment->transaction_type = $request->transaction_type;
-=======
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
             $appointment->appointment_type = $request->appointment_type;
             $appointment->entity = $request->entity;
             $appointment->purpose = $request->purpose;
@@ -145,11 +93,6 @@ class AppointmentController extends Controller
             $appointment->approval = null; // Will be set when approved/rejected
             $appointment->save();
             
-<<<<<<< HEAD
-            DB::commit();
-            
-            return redirect()->route('show.pending.appointments')
-=======
             // Generate QR code for all new appointments (except rejected)
             try {
                 app(\App\Http\Controllers\GenerateQr::class)->generateForAppointment($appointment);
@@ -160,7 +103,6 @@ class AppointmentController extends Controller
             DB::commit();
             
             return redirect()->route('appointments.pending')
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
                 ->with('success', 'Appointment scheduled successfully! Your request is pending approval.');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -169,28 +111,6 @@ class AppointmentController extends Controller
         }
     }
 
-<<<<<<< HEAD
-    // Get approved appointments with their QR codes
-    public function getApprovedAppointments()
-    {
-        $appointments = Appointment::where('user_id', Auth::id())
-            ->where('approval', 1)
-            ->with(['visit.location'])
-            ->orderBy('appointment_date')
-            ->orderBy('appointment_time')
-            ->get();
-            
-        return response()->json($appointments->map(function($appointment) {
-            return [
-                'id' => $appointment->appointment_id,
-                'appointment_date' => $appointment->appointment_date,
-                'appointment_time' => $appointment->appointment_time,
-                'location_name' => $appointment->visit->location->building_name ?? 'Not specified',
-                'qr_code_url' => $appointment->qrCode ? url('storage/qrcodes/' . $appointment->qrCode->qr_image) : null,
-                'qr_code_id' => $appointment->qrCode ? $appointment->qrCode->qr_id : null
-            ];
-        }));
-=======
     // Auto-backfill QR codes for all pending and approved appointments without one
     private function backfillMissingQRCodes()
     {
@@ -221,16 +141,12 @@ class AppointmentController extends Controller
             ->paginate(12); // Use pagination for better UX
 
         return view('appointments.approved', compact('appointments'));
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
     }
 
     // Get pending appointments
     public function showPendingAppointments()
     {
-<<<<<<< HEAD
-=======
         $this->backfillMissingQRCodes();
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
         $appointments = Appointment::where('user_id', Auth::id())
             ->whereNull('approval')
             ->with('visit.location')
@@ -252,34 +168,6 @@ class AppointmentController extends Controller
         return view('appointments.rejected', compact('appointments'));
     }
 
-<<<<<<< HEAD
-    // Get approved appointments
-    public function showApprovedAppointments()
-    {
-        $appointments = Appointment::where('user_id', Auth::id())
-            ->where('approval', 1)
-            ->with(['visit.location', 'qrCode'])
-            ->orderBy('appointment_date')
-            ->orderBy('appointment_time')
-            ->get();
-            
-        return view('appointments.approved', compact('appointments'));
-    }
-
-    public function printAppointments(){
-        // Get the user's approved appointments
-        $appointments = Appointment::where('user_id', Auth::id())
-            ->where('approval', 1)
-            ->with(['visit.location', 'qrCode'])
-            ->orderBy('appointment_date')
-            ->orderBy('appointment_time')
-            ->get();
-            
-        // Return a printer-friendly view
-        return view('appointments.print', compact('appointments'));
-    }
-=======
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
     public function show(Appointment $appointment)
     {
         // Ensure the user can only view their own appointments
@@ -287,27 +175,15 @@ class AppointmentController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-<<<<<<< HEAD
-        return view('appointments.form', compact('appointment'));
-=======
         return view('appointments.show', compact('appointment'));
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789
     }
 
     public function reject(Appointment $appointment)
     {
         $appointment->update([
-<<<<<<< HEAD
-            'approval' => 0
-        ]);
-        return redirect()->back()->with('success', 'Appointment has been denied.');
-    }
-}
-=======
             'approval' => 0,
             'qr_code' => null // Remove QR code link if rejected
         ]);
         return redirect()->back()->with('success', 'Appointment has been denied.');
     }
 }
->>>>>>> 2e02c0059258e474ba4d81b53ee3ad30139fb789

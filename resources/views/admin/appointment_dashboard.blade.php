@@ -49,17 +49,17 @@
                     <h4 class="text-center mb-4">VisiTrack</h4>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#dashboard">
+                            <a class="nav-link active" href="{{ route('admin.dashboard') }}">
                                 <i class="bi bi-speedometer2 me-2"></i>Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#visitors">
+                            <a class="nav-link" href="{{ route('admin.visitor-tracking') }}">
                                 <i class="bi bi-people me-2"></i>Visitors
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#reports">
+                            <a class="nav-link" href="{{ route('admin.reports') }}">
                                 <i class="bi bi-file-earmark-text me-2"></i>Reports
                             </a>
                         </li>
@@ -69,7 +69,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#settings">
+                            <a class="nav-link" href="{{ route('admin.settings') }}">
                                 <i class="bi bi-gear me-2"></i>Settings
                             </a>
                         </li>

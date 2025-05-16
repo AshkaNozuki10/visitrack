@@ -13,6 +13,10 @@ class LoginController extends Controller
     /**
      * Handle the login request
      */
+    public function showLoginForm(){
+        return view('auth.login');
+    }
+    
     public function authenticateUser(Request $request)
     {
         Log::info('Login attempt started', [

@@ -9,7 +9,7 @@ class User extends Model
     protected $table = 'user';
     protected $primaryKey = 'user_id';
     public $timestamps = true;
-    public $incrementing = true;
+    public $incrementing = true;    
 
      public function credential(){
         return $this->hasOne(credential::class, 'user_id', 'user_id');

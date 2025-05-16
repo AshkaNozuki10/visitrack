@@ -337,7 +337,7 @@
                         </a>
                     </li>
                     <li class="nav-item ms-3">
-                        <a class="btn px-4 py-2" href="#" style="background-color: rgba(255, 255, 255, 0.15); color: white; border-radius: 50px; backdrop-filter: blur(5px); transition: all 0.3s ease;">
+                        <a class="btn px-4 py-2" href="{{ route('show.login') }}" style="background-color: rgba(255, 255, 255, 0.15); color: white; border-radius: 50px; backdrop-filter: blur(5px); transition: all 0.3s ease;">
                             <i class="fas fa-user-circle me-1"></i> Login
                         </a>
                     </li>

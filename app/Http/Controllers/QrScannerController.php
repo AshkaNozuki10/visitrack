@@ -17,7 +17,7 @@ class QrScannerController extends BaseController
 
     public function index()
     {
-        return view('qr-scanner.index');
+        return view('qr_scanner');
     }
 
     public function verify($code)

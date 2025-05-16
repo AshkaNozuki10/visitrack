@@ -8,7 +8,7 @@ class Visit extends Model
 {
     protected $table = 'visit';
     protected $primaryKey = 'visit_id';
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'visit_id',

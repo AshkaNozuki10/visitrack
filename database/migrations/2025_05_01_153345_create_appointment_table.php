@@ -82,6 +82,7 @@ return new class extends Migration
             $table->time('entry_time');
             $table->time('exit_time');
             $table->unsignedBigInteger('location');
+            $table->timestamps();
         });
 
         Schema::create('qr_code', function (Blueprint $table){

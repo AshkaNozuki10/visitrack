@@ -18,15 +18,15 @@
                     <ul class="nav nav-tabs mb-4">
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('appointments.pending') ? 'active' : '' }}" 
-                               href="{{ route('show.pending.appointments') }}">Pending</a>
+                               href="{{ route('appointments.pending') }}">Pending</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('appointments.approved') ? 'active' : '' }}" 
-                               href="{{ route('show.approved.appointments') }}">Approved</a>
+                               href="{{ route('appointments.approved') }}">Approved</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('appointments.rejected') ? 'active' : '' }}" 
-                               href="{{ route('show.rejected.appointments') }}">Rejected</a>
+                               href="{{ route('appointments.rejected') }}">Rejected</a>
                         </li>
                     </ul>
 
@@ -68,7 +68,7 @@
                                                         Approve
                                                     </button>
                                                 </form>
-                                                <form action="{{ route('appointments.reject', $appointment->id) }}" 
+                                                <form action="{{ route('appointments.rejected', $appointment->id) }}" 
                                                       method="POST" 
                                                       class="d-inline">
                                                     @csrf
