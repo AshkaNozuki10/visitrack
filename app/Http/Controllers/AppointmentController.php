@@ -56,7 +56,7 @@ class AppointmentController extends Controller
     public function store(Request $request)
     {
         // Validate the request data
-        $validated = $request->validate([
+        $request->validate([
             'appointment_type' => 'required',
             'entity' => 'required',
             'purpose' => 'required',
@@ -151,7 +151,7 @@ class AppointmentController extends Controller
             ->whereNull('approval')
             ->with('visit.location')
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(12); // Use pagination for links()
             
         return view('appointments.pending', compact('appointments'));
     }

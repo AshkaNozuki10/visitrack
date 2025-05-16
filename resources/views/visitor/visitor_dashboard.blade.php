@@ -243,7 +243,7 @@
                 </div>
                 <div class="sidebar-animated"><a href="#" class="sidebar-link">PROFILE</a></div>
                 <div class="sidebar-animated"><a href="#" class="sidebar-link">Account Settings</a></div>
-                <div class="sidebar-animated"><a href="#" class="sidebar-link">Campus Map</a></div>
+                <div class="sidebar-animated"><a href="{{ route('visitor.dashboard') }}" class="sidebar-link">Campus Map</a></div>
                 <div class="sidebar-animated sidebar-link-group">
                     <a href="{{ route('appointment.form') }}" class="sidebar-link">Appointments</a>
                     <div class="sub-menu w-100">

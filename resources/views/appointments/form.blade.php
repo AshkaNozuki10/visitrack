@@ -105,7 +105,6 @@
         </ul>
     </div>
 @endif
-
                     <!-- Map Container -->
                     <div class="position-relative mb-4">
                     </div>
