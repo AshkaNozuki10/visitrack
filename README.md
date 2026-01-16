@@ -1,66 +1,202 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<h1 align="center">VisitTrack</h1>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<p align="center">A Laravel-based visitor and appointment tracking system for buildings and facilities.</p>
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Overview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+VisitTrack centralizes visitor management: create and manage appointments, track visits and locations, associate visitors with buildings and addresses, and generate QR codes for fast check-ins. It includes admin dashboard capabilities and notifications (e.g., GPS status) to keep operations smooth.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Key domain entities:
 
-## Learning Laravel
+- Users and Credentials
+- Addresses and Buildings
+- Appointments and Visits
+- QR Codes and Locations
+- Activity Logs and Notifications
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Built with Laravel, Vite, and MySQL/MariaDB.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Features
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Appointment scheduling and updates
+- Visitor check-in/out and visit history
+- Building and address registry
+- QR code generation and scanning support
+- GPS status notifications
+- Admin dashboard (migrations included)
+- Activity logging
 
-## Laravel Sponsors
+## Tech Stack
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- Backend: Laravel (PHP)
+- Database: MySQL/MariaDB
+- Frontend assets: Vite (Node.js)
+- Package management: Composer (PHP), npm (JS)
 
-### Premium Partners
+## Prerequisites
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- PHP 8.x (CLI) and required extensions
+- Composer
+- Node.js 18+ and npm
+- MySQL/MariaDB (XAMPP on Windows recommended)
 
-## Contributing
+## Quick Start (Windows/XAMPP)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Place the project under `C:\xampp\htdocs\visitrack`.
+2. Create a database (e.g., `visitrack`) in phpMyAdmin or MySQL.
+3. Create an environment file and app key:
 
-## Code of Conduct
+```bash
+copy .env.example .env
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+4. Install dependencies:
 
-## Security Vulnerabilities
+```bash
+composer install
+npm install
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+5. Configure `.env` for your database and app URL.
+6. Run migrations and (optionally) seed sample data:
 
-## License
+```bash
+php artisan migrate
+php artisan db:seed
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+7. Start the development servers:
+
+```bash
+php artisan serve
+npm run dev
+```
+
+Open `http://localhost:8000` (or your configured Apache vhost) to access the app.
+
+## Configuration
+
+Edit `.env` to match your environment. Common settings:
+
+```env
+# App
+APP_NAME=VisitTrack
+APP_ENV=local
+APP_KEY=base64:...
+APP_DEBUG=true
+APP_URL=http://localhost
+
+# Database (XAMPP defaults shown)
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=visitrack
+DB_USERNAME=root
+DB_PASSWORD=
+
+# Cache/Session/Queue
+CACHE_DRIVER=file
+SESSION_DRIVER=file
+QUEUE_CONNECTION=database
+
+# Mail (optional)
+MAIL_MAILER=smtp
+MAIL_HOST=127.0.0.1
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="noreply@example.com"
+MAIL_FROM_NAME="VisitTrack"
+```
+
+After changes, you may optimize config and routes for production:
+
+```bash
+php artisan config:cache
+php artisan route:cache
+```
+
+## Database
+
+Migrations define tables for appointments, addresses, buildings, sessions, cache, and admin dashboard, among others. Seeders (e.g., `AddressSeeder`) can populate baseline data.
+
+Useful commands:
+
+```bash
+php artisan migrate          # apply migrations
+php artisan migrate:fresh    # drop and re-create schema
+php artisan db:seed          # run DatabaseSeeder
+```
+
+## Development
+
+- Laravel dev server: `php artisan serve`
+- Vite dev server with HMR: `npm run dev`
+- Build production assets: `npm run build`
+
+If using Apache with XAMPP, point DocumentRoot to `public/` and ensure `.htaccess` is enabled for pretty URLs.
+
+## Testing
+
+Run the test suite with PHPUnit or the artisan wrapper:
+
+```bash
+php artisan test
+```
+
+Or directly:
+
+```bash
+vendor\bin\phpunit
+```
+
+## Project Structure
+
+- `app/` — Application code (controllers, models, requests, notifications, providers)
+	- `Http/Controllers/` — Feature controllers (e.g., appointments)
+	- `Models/` — Domain models (appointment, visit, building, address, credential, user, location, qrCode)
+	- `Notifications/` — e.g., `GpsStatusNotification`
+- `bootstrap/` — Framework bootstrap
+- `config/` — App configuration (auth, cache, database, filesystems, logging, mail, queue, services, session)
+- `database/` — Factories, migrations, and seeders
+- `public/` — Web entry (`index.php`), public assets
+- `resources/` — Blade views, CSS/JS source (built via Vite)
+- `routes/` — Route definitions (`web.php`, `console.php`)
+- `storage/` — Logs, cache, compiled views, app files
+- `vendor/` — Composer dependencies
+
+## Common Commands
+
+```bash
+php artisan route:list        # inspect routes
+php artisan make:model Foo -m # generate model + migration
+php artisan make:controller   # generate controller
+php artisan storage:link      # link storage/app/public
+php artisan queue:work        # run queued jobs
+php artisan schedule:run      # run scheduled tasks
+```
+
+## Deployment
+
+1. Set `APP_ENV=production` and `APP_DEBUG=false`.
+2. Configure your web server to serve the `public/` directory.
+3. Run database migrations: `php artisan migrate`.
+4. Build assets: `npm ci && npm run build`.
+5. Optimize caches: `php artisan optimize`.
+6. Configure queues (`QUEUE_CONNECTION=database` or `redis`) and supervisors.
+
+## Troubleshooting
+
+- 404s on pretty URLs: enable Apache `mod_rewrite`, ensure `.htaccess` is active and DocumentRoot points to `public/`.
+- `.env` not loading: verify file exists at project root and correct permissions.
+- Class/extension errors: ensure PHP extensions required by Laravel and MySQL are enabled in XAMPP.
+- Asset issues: re-run `npm run dev` or `npm run build` and clear caches (`php artisan view:clear`, `php artisan cache:clear`).
+
+## Acknowledgements
+
+This application is built on the Laravel framework and uses community packages (e.g., QR code generation). See `composer.json` for a full dependency list.
+
